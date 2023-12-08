@@ -5,7 +5,22 @@
     height: 100%;
     z-index: 0;
     background-color: #2F343E;
-    overflow-y: scroll; 
+    overflow: hidden;
 
+    display: grid;
+    grid-template-columns: 1fr 57%;
+    gap:1em;
+    
+
+    .songs{
+        //overflow: hidden;
+        
+        overflow-y: scroll;
+        width: 360px;
+        height: 33em;
+
+        //align-self: center;
+        justify-self: end;
+    }
     
 } 

@@ -1,27 +1,31 @@
 .slyder{
     //position
     
-    margin:10em auto 0 auto;
+    align-self: center;
+    justify-self: center;
     width: 65em;
     overflow: hidden;
 
     //style
     color:#454C59;
     display: flex;
-    gap: 3em;
+    gap: 3.2em;
     text-align: center;
-
+    overflow-x: scroll;
+    
+    grid-column: span 2;
     
     .album{
         //width: 10em;
+       
 
         img{
             width: 10em;
             height: 10em;
+            border-radius: 10px;
+            box-shadow: 0 0 4px 1px black;
         }
     }
 
-    button{
-        position: absolute;
-    }
+    
 }

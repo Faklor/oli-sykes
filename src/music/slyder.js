@@ -7,7 +7,7 @@ export default function Slyder(props){
         <div className='album'>
             <img src={props.img} alt='album'/>
             <h1>{props.name}</h1>
-        </div>
+        </div> 
         
     )
 }
