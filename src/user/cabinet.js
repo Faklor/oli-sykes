@@ -3,7 +3,7 @@ import './cabinet.scss'
 import { useSelector, useDispatch } from 'react-redux'
 import {selectUser,  setStateUser} from '../store/nowUser'
 //===============navigate================================
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useEffect } from 'react'
 
 export default function Cabinet(){
@@ -12,12 +12,14 @@ export default function Cabinet(){
     const dispatch = useDispatch()
     //================navigate========================
     const navigate = useNavigate()
+    let { userName } = useParams()
     //==================state=========================
     //================================================
-    
+   
 
     useEffect(()=>{
         if(selectorUser === null){
+            
            return navigate('../User/signIn')
         }
     })
@@ -27,13 +29,23 @@ export default function Cabinet(){
         dispatch(setStateUser(null))
         return navigate('../signIn')
     }
-
-    return(
-        <div className="cabinet">
+    //===============render-function==================
+    function render(){
+        if(userName !== selectorUser.name){
+            return <h1>User not Found</h1>
+        }
+        return <div className="cabinet">
             <img src={selectorUser.img} alt='imgUser'/>
             <h1>{selectorUser.name}</h1>
             <button onClick={outAccount}>Edit</button>
             <button onClick={outAccount}>Log out</button>
         </div>
+    }
+   
+
+    return(
+        <>
+            {render()}
+        </>
     )
 } 

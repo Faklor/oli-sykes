@@ -57,7 +57,7 @@ function SignIn(props){
         dispatch(setStateUser(user))
         
         //selector = user
-        return  navigate('../User/')
+        return  navigate('../'+user.name)
 
     }
     //-------------------set-Register-or-Login-------------------------------

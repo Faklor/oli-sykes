@@ -106,10 +106,14 @@ const NavMenu = props =>{
         
         if(selector[0] !== selector[index]){
             if(selector[0].name !== "Home" && selector[0].name !== "Music" && selector[0].name !== "Blog"){
+                if(selectorUser !== null){
+                    return navigate ('../User/'+selectorUser.name)
+                }
+                
                 return navigate('../User/signIn')
             }
             //selector[0].name === "User" || copyDefaulList[3].name != selectorUser.name)
-            
+           
             return  navigate('../'+selector[0].name)
             
             
