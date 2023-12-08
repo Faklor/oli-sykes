@@ -25,7 +25,7 @@ export default function Cabinet(){
     //================function========================
     function outAccount(){
         dispatch(setStateUser(null))
-        return navigate('../User/signIn')
+        return navigate('../signIn')
     }
 
     return(

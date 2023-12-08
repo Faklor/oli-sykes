@@ -1,5 +1,5 @@
 import './sign.scss'
-import { Link, useNavigate } from "react-router-dom"
+import { Link, useNavigate} from "react-router-dom"
 import { loginOpacity1 } from '../components/animate'
 
 import human from '../res/human.png'
@@ -43,6 +43,9 @@ function SignIn(props){
     function setLock(e){
         setLockHook(e.target.value)
     }
+    function setEmail(e){
+        setEmailHook(e.target.value)
+    }
     function getUser(e){
         //axios
 
@@ -60,14 +63,16 @@ function SignIn(props){
     //-------------------set-Register-or-Login-------------------------------
     function setSign(){
         if(props.status[0] === "Register"){
-            return <div><img src={mail} alt="mail"/><input placeholder="Enter your Mail" type='email' value={emailHook} onChange={setEmailHook}/></div>
+            return <div><img src={mail} alt="mail"/><input placeholder="Enter your Mail" type='email' value={emailHook} onChange={setEmail}/></div>
         }
         return<></>
     }
     
 
     return(
+        
         <div className="sign">
+            
             <img src={login} alt='login'/>
             <h1>{props.status[0]}</h1>
             {setSign()}
@@ -83,7 +88,7 @@ function SignIn(props){
             <button onClick={getUser}>{props.status[1]}</button>
            
             <Link to={`/User/${props.status[3]}`}> {props.status[2]} </Link>
-
+            
         </div>
     )
 }
