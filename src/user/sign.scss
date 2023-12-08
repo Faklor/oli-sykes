@@ -1,0 +1,82 @@
+.sign{
+    position: relative;
+    left: 150px;
+    opacity: 0;
+    transition: 0.5s;
+    text-align: center;
+    justify-self: center;
+    align-self: center;
+    //width: 320px;
+    img{
+        height: 10em;
+    }
+    h1{
+        font-size: 40px;
+        text-shadow:4px 0 2px black;
+    }
+    div{
+        display: flex;
+        img{
+            align-self: center;
+            width: 3em;
+            height: 3em;
+            background-color: #2F343E;
+            border-radius: 10px 0 0 10px;
+            box-shadow: -1px -2px 2px black, 
+                        -1px 2px 2px black;
+            border: none;
+
+        }
+        input{
+            //width: 10em;
+            display: block;
+            padding: 1.2em;
+            border-radius: 0 10px 10px 0;
+            border:none;
+            box-shadow: 1px -2px 2px black, 
+                        1px 2px 2px black;
+            margin:1em  1em 1em 2px;
+            outline: 0;
+            background-color: #666f81;
+            color:#c2c1c1;
+            cursor: pointer;
+            transition: 0.5s;
+
+            &::placeholder{
+                color:#c2c1c1;
+            }
+
+            &:focus{
+                background-color: #AAC281;
+                color:#fff;
+            }
+
+        }
+    }
+    button{
+        display: block;
+        margin:2em 2.5em 5em 2.5em;
+
+        font-size: 24px;
+        font-family: "Electrolize";
+        background-color: #AAC281;
+        border: none;
+        padding: 0.5em 2em;
+        border-radius: 10px;
+        cursor: pointer;
+        box-shadow: 0 0 4px 2px black;
+        transition: 0.5s;
+        &:hover{
+            background-color: black;
+            color:#fff;
+
+        }
+    }
+    
+    a{
+        font-size: 24px;
+        color:#fff;
+    }
+
+    
+}

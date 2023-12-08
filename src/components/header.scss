@@ -1,0 +1,25 @@
+@import '@fontsource/julius-sans-one';
+
+header{
+    //background-color: #252526;
+    padding: 1em;
+    //box-shadow: 0 0 0.1em 2px #343434;
+    position: fixed;
+    width: 100%;
+    z-index: 1;
+    margin:3em;
+
+    .logo{
+        display: flex;
+        svg{
+            width: 3.5em;
+        }
+        h1{
+            font-family: 'Julius Sans One';
+            color:#fff;
+            font-size: 24px;
+            pointer-events: none;
+            user-select: none;
+        }
+    }
+}
