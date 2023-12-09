@@ -13,7 +13,7 @@ const Users = sequelize.define("users", {
   password: { type: DataTypes.STRING, required: true },
   filename: { type: DataTypes.STRING },
   contentType: {type: DataTypes.STRING },
-  imageBase64: { type: DataTypes.TEXT },
+  imageBase64: { type: DataTypes.BLOB('long') },
   role: { type: DataTypes.STRING, defaultValue: "USER" },
 });
 

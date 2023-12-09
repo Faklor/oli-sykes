@@ -17,15 +17,22 @@ class Auth {
       const user = await Users.findOne({ raw: true, where: { email } });
 
       if (!user) {
-        return res.json({loggedIn: false, message: "Пользователя с таким e-mail не существует"});
+        return res.json({loggedIn: false, message: "User doesn't exist"});
       } 
 
       const valid = await bcrypt.compareSync(password, user.password);
       if (!valid) {
-        return res.json({loggedIn: false, message: "Неверный пароль"});
+        return res.json({loggedIn: false, message: "Incorrect password"});
       } 
-
-      res.json({loggedIn: true, email: user.email, role: user.role});
+      
+      res.json({
+        loggedIn: true, 
+        email: user.email,
+        role: user.role, 
+        image: {
+          contentType: user.contentType,
+          base64: user.imageBase64
+        }});
 
     } catch (e) {
       res.json(e.message);
