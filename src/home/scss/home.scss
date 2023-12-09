@@ -6,6 +6,8 @@
     
     overflow: hidden;
     user-select: none;
+    opacity: 0;
+    animation: blink 0.5s forwards;
 
     img{
         width: 100%;
@@ -58,18 +60,7 @@
         animation: blink 0.5s 7s forwards;
         opacity: 0;
     }  
-    .parallax{
-        position: relative;
-        margin:110em 0 0 0;
-        
-
-        background-color: #353F54;
-        width: 100%;
-        
-        h1{
-           //margin:0;
-        }
-    }
+    
 }
 
 @keyframes animStLine {
