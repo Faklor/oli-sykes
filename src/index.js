@@ -28,7 +28,7 @@ import {
 } from "react-router-dom"
 //==============parallax=====================
 
-const SignUp = hoc(['Register','SignUp', 'Sign In', 'signIn'])(SignIn)
+const SignUp = hoc(['Register','SignUp', 'Sign In', 'signIn','registration'])(SignIn)
 
 const router = createBrowserRouter([
   { path:'/', element:<Navigate to='/Home' replace={true}/> },
@@ -45,7 +45,7 @@ const router = createBrowserRouter([
   { path: "/User", element:<User/>,
     children:[
       { path: ':userName', element:<Cabinet/> },
-      { path: 'signIn', element:<SignIn status={['Login','SignIn', 'Create Account', 'signUp']}/>},
+      { path: 'signIn', element:<SignIn status={['Login','SignIn', 'Create Account', 'signUp','login']}/>},
       { path: 'signUp', element:<SignUp/> },
       { path: 'dashboard',}
     ]

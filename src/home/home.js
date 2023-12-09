@@ -1,12 +1,12 @@
-
 import Header from '../components/header'
-import './home.scss'
+import './scss/home.scss'
 import backHome from '../res/backHome.png'
 import stline from '../res/stline.svg'
 import { ReactSVG } from 'react-svg'
 import { Parallax } from '@react-spring/parallax'
 //-----------------------------
 import TextWriting  from './textWriting'
+import ParallaxContent  from './parallaxContent'
 
 const Home = props => {
 
@@ -16,7 +16,7 @@ const Home = props => {
       <main className='home'>
         <img  src={backHome} alt='backHome'/>
         <TextWriting text={`Hello!`} speed={100}/>
-        <TextWriting text={`My name is 
+        <TextWriting text={`My name is
 Oliver Scott Sykes, 
 I formed 
 Bring me the horizon`} 
@@ -29,11 +29,9 @@ Bring me the horizon`}
         </div>
         
         <Parallax pages={3}>
-          
-            <div className='parallax'>
-              <h1>Hello Alisa</h1>
-            </div>
-          
+          {/* <ParallaxLayer offset={0} speed={2.5}> */}
+            <ParallaxContent/>
+          {/* </ParallaxLayer> */}
         </Parallax>
         
       </main>

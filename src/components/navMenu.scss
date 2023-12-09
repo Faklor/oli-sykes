@@ -4,6 +4,8 @@
     //width: 10em;
    //display: inline-block;
     margin-top:0.2em;
+    opacity: 0;
+    animation: blink 0.5s forwards;
 
     .item{
         display: flex;
@@ -48,5 +50,14 @@
 
         }
         
+    }
+}
+
+@keyframes blink {
+    from{
+        opacity: 0%;
+    }
+    to{
+        opacity: 100%;
     }
 }
