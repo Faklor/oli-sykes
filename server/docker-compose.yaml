@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+  db:
+    container_name: mysqldb
+    image: mysql:8.0
+    restart: unless-stopped
+    networks:
+      - net
+    environment: 
+      MYSQL_ROOT_PASSWORD: 123
+      MYSQL_DATABASE: test
+    ports:
+      - 6033:3306
+    expose:
+      - 6033
+    volumes:
+      - datavolume:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", db, "-uroot", "-p123"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  app:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    container_name: server
+    networks:
+      - net
+    environment:
+      DB_NAME: test
+      DB_USER: root
+      DB_PASSWORD: 123
+      DB_HOST: db
+      DB_PORT: 3306
+      TIMEZONE: "+03:00"
+    depends_on:
+      db:
+        condition: service_healthy 
+    ports:
+      - 5000:5000
+      
+volumes:
+  datavolume:
+
+networks:
+  net:
+    driver: bridge
