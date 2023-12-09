@@ -7,6 +7,8 @@ import lock from '../res/lock.png'
 import login from '../res/login.png'
 import mail from '../res/mail.png'
 import { useEffect, useState, memo } from 'react'
+//----------------asios----------------------------------
+import axios from 'axios'
 //----------------redux----------------------------------
 import { useDispatch, useSelector } from 'react-redux'
 import { 
@@ -33,6 +35,7 @@ function SignIn(props){
         if(selectorUser != null){
            return navigate('../User/')
         }
+
         
     }) 
     //======================function=====================
@@ -56,14 +59,21 @@ function SignIn(props){
         }
         dispatch(setStateUser(user))
         
-        //selector = user
         return  navigate('../'+user.name)
+        // const req =async()=> await axios.post('http://localhost:5000/api/'+props.status[4],{email:emailHook, password:lockHook})
+        // .then(res=>{
+        //     console.log(res)
+        //     dispatch(setStateUser(user))
+        //     return  navigate('../'+user.name)
+        // })
+        // .catch(e=>console.log(e))
+        // req()
 
     }
     //-------------------set-Register-or-Login-------------------------------
     function setSign(){
-        if(props.status[0] === "Register"){
-            return <div><img src={mail} alt="mail"/><input placeholder="Enter your Mail" type='email' value={emailHook} onChange={setEmail}/></div>
+        if(props.status[0] === "Register"){ 
+            return <div><img src={human}  alt='human'/><input placeholder="Enter your Login"  type='text' value={loginHook} onChange={setLogin} /></div>
         }
         return<></>
     }
@@ -77,9 +87,9 @@ function SignIn(props){
             <h1>{props.status[0]}</h1>
             {setSign()}
             <div>
-                <img src={human}  alt='human'/>
-                <input placeholder="Enter your Login"  type='text' value={loginHook} onChange={setLogin} />
-            </div>
+                <img src={mail} alt="mail"/>
+                <input placeholder="Enter your Mail" type='email' value={emailHook} onChange={setEmail}/>
+                </div>
             <div>
                 <img src={lock} alt='lock'/>
                 <input placeholder="Enter your Password" type="password" value={lockHook} onChange={setLock}/>

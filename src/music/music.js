@@ -4,10 +4,15 @@ import Song from './song'
 import YouTube from 'react-youtube'
 
 import './music.scss'
+//-----------------axios------------------------
+import axios from 'axios'
+import { useEffect } from "react"
 
 //import axios from 'axios'
 
 const Songs= props=>{
+
+
     const albums = [
         {
             id:1,
