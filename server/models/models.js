@@ -57,7 +57,7 @@ const Songs = sequelize.define("songs", {
 const Post_details = sequelize.define(
   "post_details",
   {
-    comment: { type: DataTypes.STRING, required: true },
+    comment: { type: DataTypes.TEXT, required: true },
     like: { type: DataTypes.INTEGER, defaultValue: 0 },
   },
   {timestamps: true}
@@ -66,17 +66,17 @@ const Post_details = sequelize.define(
 const Song_details = sequelize.define(
   "song_details",
   {
-    comment: { type: DataTypes.STRING, required: true },
+    comment: { type: DataTypes.TEXT, required: true },
     like: { type: DataTypes.INTEGER, defaultValue: 0 },
   },
   {timestamps: true}
 );
 
-Users.belongsToMany(Posts, { through: Post_details });
-Posts.belongsToMany(Users, { through: Post_details });
+Users.belongsToMany(Posts, { through: { model: Post_details, unique: false }});
+Posts.belongsToMany(Users, { through: { model: Post_details, unique: false }});
 
-Songs.belongsToMany(Users, { through: Song_details });
-Users.belongsToMany(Songs, { through: Song_details });
+Songs.belongsToMany(Users, { through: { model: Song_details, unique: false }});
+Users.belongsToMany(Songs, { through: { model: Song_details, unique: false }});
 
 Albums.hasMany(Songs, { onDelete: "cascade" });
 Songs.belongsTo(Albums);

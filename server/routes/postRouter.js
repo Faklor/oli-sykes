@@ -7,7 +7,7 @@ const router = new Router()
 router.post("/create", post.create)
 router.post("/delete", post.delete)
 router.post("/update", post.update)
-router.post("/comment", post.add_comment)
+router.post("/comment", post.add_details)
 router.get("/get", post.get)
 
 export default router

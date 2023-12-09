@@ -1,26 +1,29 @@
-import { Posts } from "../models/models.js";
+import { Post_details, Posts, Users } from "../models/models.js";
 
 class Post {
   async get(req, res) {
     try {
-      const categories = await Categories.findAll({
+      const posts = await Posts.findAll({
         order: [
-          ['name', 'ASC'],
+          ['title', 'ASC'],
         ], 
       })
-      const products = await Products.findAll(
+      const postsWithDetails = await Posts.findAll(
         {
           order: [
-            ['name', 'ASC'],
+            ['title', 'ASC'],
           ],
           include: [
-            {model: Categories, attributes: ["name", "id"]},
-            {model: Product_details, attributes: ["size", "color", "id"]}
+            {
+              model: Post_details, 
+              attributes: ["comment", "like"],
+              include: [Users]
+            }
           ],
         })
     
       res.json({
-        data: { },
+        data: { posts, postsWithDetails},
       });
     } catch (e) {
       res.json(e.message);
@@ -32,7 +35,7 @@ class Post {
     
       const {title, description, img} = req.body
       await Posts.create({title, description, img})
-        .then(() => res.json({create: true}))
+        .then(() => res.json({created: true}))
         .catch((e) => res.json({error: e.message}))
 
     } catch (e) {
@@ -42,10 +45,12 @@ class Post {
 
   async delete(req, res) {
     try {
-    
-      res.json({
-        data: { },
-      });
+
+      const {id} = req.body
+      id.map(async(res) => (
+        await Posts.destroy({where: {id}})
+      ))
+      res.json({deleted: true})
 
     } catch (e) {
       res.json(e.message);
@@ -64,12 +69,13 @@ class Post {
     }
   }
   
-  async add_comment(req, res) {
+  async add_details(req, res) {
     try {
     
-      res.json({
-        data: { },
-      });
+      const {comment, userId, postId} = req.body
+      await Post_details.create({comment, userId, postId})
+        .then(() => res.json({created: true}))
+        .catch((e) => res.json({error: e.message}))
 
     } catch (e) {
       res.json(e.message);

@@ -31,7 +31,7 @@ class Album {
     
       const {title, img} = req.body
       await Albums.create({title, img})
-        .then(() => res.json({create: true}))
+        .then(() => res.json({created: true}))
         .catch((e) => res.json({error: e.message}))
 
     } catch (e) {
@@ -42,9 +42,11 @@ class Album {
   async delete(req, res) {
     try {
     
-      res.json({
-        data: { },
-      });
+      const {id} = req.body
+      id.map(async(res) => (
+        await Albums.destroy({where: {id}})
+      ))
+      res.json({deleted: true})
 
     } catch (e) {
       res.json(e.message);

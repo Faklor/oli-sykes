@@ -1,4 +1,4 @@
-import { Songs, Albums } from "../models/models.js";
+import { Songs, Albums, Song_details } from "../models/models.js";
 
 class Song {
   async get(req, res) {
@@ -18,7 +18,7 @@ class Song {
       
       const {title, url, albumId} = req.body
       await Songs.create({title, url, albumId})
-        .then(() => res.json({create: true}))
+        .then(() => res.json({created: true}))
         .catch((e) => res.json({error: e.message}))
       
     } catch (e) {
@@ -29,9 +29,11 @@ class Song {
   async delete(req, res) {
     try {
       
-      res.json({
-
-      });
+      const {id} = req.body
+      id.map(async(res) => (
+        await Songs.destroy({where: {id}})
+      ))
+      res.json({deleted: true})
 
     } catch (e) {
       res.json(e.message);
@@ -50,12 +52,13 @@ class Song {
     }
   }
   
-  async add_comment(req, res) {
+  async add_details(req, res) {
     try {
       
-      res.json({
-
-      });
+      const {comment, userId, postId} = req.body
+      await Song_details.create({comment, userId, songId})
+        .then(() => res.json({created: true}))
+        .catch((e) => res.json({error: e.message}))
 
     } catch (e) {
       res.json(e.message);
