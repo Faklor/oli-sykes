@@ -25,7 +25,7 @@ class Auth {
         return res.json({loggedIn: false, message: "Неверный пароль"});
       } 
 
-      res.json({loggedIn: true, user.email, user.role});
+      res.json({loggedIn: true, email: user.email, role: user.role});
 
     } catch (e) {
       res.json(e.message);
