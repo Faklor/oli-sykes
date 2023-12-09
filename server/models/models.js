@@ -26,9 +26,9 @@ const Posts = sequelize.define("posts", {
     allowNull: false,
   },
   title: { type: DataTypes.STRING, required: true },
-  discription: { type: DataTypes.TEXT },
+  description: { type: DataTypes.TEXT },
   img: { type: DataTypes.TEXT, required: true },
-  likes: { type: DataTypes.INTEGER, required: true },
+  likes: { type: DataTypes.INTEGER, defaultValue: 0 },
 });
 
 const Albums = sequelize.define("albums", {
@@ -53,7 +53,7 @@ const Songs = sequelize.define("songs", {
   },
   title: { type: DataTypes.STRING, required: true },
   url: { type: DataTypes.STRING, required: true },
-  likes: { type: DataTypes.INTEGER, required: true },
+  likes: { type: DataTypes.INTEGER, defaultValue: 0 },
 });
 
 const Post_comments = sequelize.define(
