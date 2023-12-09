@@ -14,7 +14,7 @@ class Album {
             ['title', 'ASC'],
           ],
           include: [
-            {model: Songs, attributes: ["title", "id", "likes", "url"]}
+            {model: Songs, attributes: ["title", "id", "url"]}
           ],
         })
     

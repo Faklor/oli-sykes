@@ -28,7 +28,6 @@ const Posts = sequelize.define("posts", {
   title: { type: DataTypes.STRING, required: true },
   description: { type: DataTypes.TEXT },
   img: { type: DataTypes.TEXT, required: true },
-  likes: { type: DataTypes.INTEGER, defaultValue: 0 },
 });
 
 const Albums = sequelize.define("albums", {
@@ -53,39 +52,49 @@ const Songs = sequelize.define("songs", {
   },
   title: { type: DataTypes.STRING, required: true },
   url: { type: DataTypes.STRING, required: true },
-  likes: { type: DataTypes.INTEGER, defaultValue: 0 },
 });
 
-const Post_comments = sequelize.define(
-  "post_comments",
+const Post_details = sequelize.define(
+  "post_details",
   {
     comment: { type: DataTypes.STRING, required: true },
+    like: { type: DataTypes.INTEGER, defaultValue: 0 },
   },
   {timestamps: true}
 );
 
-const Song_comments = sequelize.define(
-  "song_comments",
+const Song_details = sequelize.define(
+  "song_details",
   {
     comment: { type: DataTypes.STRING, required: true },
+    like: { type: DataTypes.INTEGER, defaultValue: 0 },
   },
   {timestamps: true}
 );
 
-Users.belongsToMany(Posts, { through: Post_comments });
-Posts.belongsToMany(Users, { through: Post_comments });
+Users.belongsToMany(Posts, { through: Post_details });
+Posts.belongsToMany(Users, { through: Post_details });
 
-Songs.belongsToMany(Users, { through: Song_comments });
-Users.belongsToMany(Songs, { through: Song_comments });
+Songs.belongsToMany(Users, { through: Song_details });
+Users.belongsToMany(Songs, { through: Song_details });
 
 Albums.hasMany(Songs, { onDelete: "cascade" });
 Songs.belongsTo(Albums);
+
+Users.hasMany(Post_details, {onDelete: "cascade"});
+Post_details.belongsTo(Users);
+
+Users.hasMany(Song_details, {onDelete: "cascade"});
+Song_details.belongsTo(Users);
+
+Posts.hasMany(Post_details, {onDelete: "cascade"});
+Post_details.belongsTo(Posts);
 
 export {
   Users,
   Posts,
   Songs,
   Albums,
-  Post_comments,
-  Song_comments
+  Post_details,
+  Song_details
 };
