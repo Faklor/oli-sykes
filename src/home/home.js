@@ -5,6 +5,8 @@ import backHome from '../res/backHome.png'
 import stline from '../res/stline.svg'
 import { ReactSVG } from 'react-svg'
 import { Parallax } from '@react-spring/parallax'
+//-----------------------------
+import TextWriting  from './textWriting'
 
 const Home = props => {
 
@@ -13,12 +15,12 @@ const Home = props => {
       <Header/>
       <main className='home'>
         <img  src={backHome} alt='backHome'/>
-        <h1>Hello!</h1>
-        <h2>My name is<br/>
-            Oliver Scott Sykes, <br/>
-            I formed <br/>
-            Bring me the horizon
-        </h2>
+        <TextWriting text={`Hello!`} speed={100}/>
+        <TextWriting text={`My name is 
+Oliver Scott Sykes, 
+I formed 
+Bring me the horizon`} 
+        speed={100}/>
         <div>
           <h3>
             It this syte - my Blog,<br/> scroll down and check  this

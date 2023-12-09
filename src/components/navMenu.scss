@@ -18,15 +18,12 @@
 
         width: 2em;
         height: 2em;
-        //pointer-events: none;
-        //height: 3.2em;
         
         position: absolute;
         &:nth-child(1){
             z-index: 1;
         }
         &:nth-child(n+2){
-            //background-color: red;
             z-index: 0;
             opacity: 0;
         }
@@ -35,6 +32,8 @@
             height: 2em;
             pointer-events: none;
             border-radius: 100%;
+            
+            user-select: none;
             
         }
         p{

@@ -16,16 +16,27 @@
         
         
     }
-    h1{
-        font-size: 64px;
-        color:#fff;
-        margin: 3.5em 0 0 2.9em;
-    }
-    h2{
+    .writer{
         font-size: 40px;
         color:#C2C2C2;
         margin: 1em 0 0 7em;
+        
+        &:nth-child(2){
+            font-size: 64px;
+            color:#fff;
+            margin: 3.5em 0 0 2.9em;
+        }
+        &:nth-child(3){
+            font-size: 40px;
+            color:#C2C2C2;
+            margin: 1em 0 0 7em;
+        }
 
+
+        &::after{
+            content: "|";
+            animation: blink 1s infinite;
+        }
     }
     div{
         display: flex;
@@ -44,6 +55,8 @@
            }
             
         }
+        animation: blink 0.5s 7s forwards;
+        opacity: 0;
     }  
     .parallax{
         position: relative;
@@ -67,3 +80,15 @@
         transform: translateY(15px);
     }
 }
+
+@keyframes blink {
+    from{
+        opacity: 0%;
+    }
+    to{
+        opacity: 100%;
+    }
+}
+
+
+
