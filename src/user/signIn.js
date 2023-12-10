@@ -8,7 +8,9 @@ import login from '../res/login.png'
 import mail from '../res/mail.png'
 import { useEffect, useState, memo } from 'react'
 //----------------asios----------------------------------
-import axios from 'axios'
+import {
+    signIn, signUp
+} from '../components/axiosRouterPost'
 //----------------redux----------------------------------
 import { useDispatch, useSelector } from 'react-redux'
 import { 
@@ -50,24 +52,27 @@ function SignIn(props){
         setEmailHook(e.target.value)
     }
     function getUser(e){
-        //axios
-
-        
-        const user = {
-            name: loginHook,
-            img:'https://avatars.mds.yandex.net/i?id=375fb08833dbc1cd62deab93a1d659178abc3a02-9181195-images-thumbs&n=13'
+  
+        if(props.status[4] === "login"){
+            signIn(emailHook, lockHook)
+            .then(res=>{
+                dispatch(setStateUser(res))
+                return  navigate('../'+res.data.login)
+            })
+            .catch(e=>console.log(e))
         }
-        dispatch(setStateUser(user))
+        else{
+            signUp(emailHook, lockHook)
+            .then(res=>{
+                //console.log(res)
         
-        return  navigate('../'+user.name)
-        // const req =async()=> await axios.post('http://localhost:5000/api/'+props.status[4],{email:emailHook, password:lockHook})
-        // .then(res=>{
-        //     console.log(res)
-        //     dispatch(setStateUser(user))
-        //     return  navigate('../'+user.name)
-        // })
-        // .catch(e=>console.log(e))
-        // req()
+                //dispatch(setStateUser(res))
+                //return  navigate('../'+res.data.email)
+            })
+            .catch(e=>console.log(e))
+        }
+        
+        
 
     }
     //-------------------set-Register-or-Login-------------------------------
