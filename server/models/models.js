@@ -9,6 +9,7 @@ const Users = sequelize.define("users", {
     unique: true,
     allowNull: false,
   },
+  name: { type: DataTypes.STRING, unique: true, required: true },
   email: { type: DataTypes.STRING, unique: true, required: true },
   password: { type: DataTypes.STRING, required: true },
   filename: { type: DataTypes.STRING },
@@ -54,47 +55,88 @@ const Songs = sequelize.define("songs", {
   url: { type: DataTypes.STRING, required: true },
 });
 
-const Post_details = sequelize.define(
-  "post_details",
+const Post_comments = sequelize.define(
+  "post_comments",
   {
     comment: { type: DataTypes.TEXT, required: true },
-    like: { type: DataTypes.INTEGER, defaultValue: 0 },
   },
   {timestamps: true}
 );
 
-const Song_details = sequelize.define(
-  "song_details",
+const Post_likes = sequelize.define(
+  "post_likes",
   {
-    comment: { type: DataTypes.TEXT, required: true },
-    like: { type: DataTypes.INTEGER, defaultValue: 0 },
+    like: { type: DataTypes.INTEGER, defaultValue: 1 },
   },
   {timestamps: true}
 );
 
-Users.belongsToMany(Posts, { through: { model: Post_details, unique: false }});
-Posts.belongsToMany(Users, { through: { model: Post_details, unique: false }});
+const Song_comments = sequelize.define(
+  "song_comments",
+  {
+    comment: { type: DataTypes.TEXT, required: true },
+  },
+  {timestamps: true}
+);
 
-Songs.belongsToMany(Users, { through: { model: Song_details, unique: false }});
-Users.belongsToMany(Songs, { through: { model: Song_details, unique: false }});
+const Song_likes = sequelize.define(
+  "song_likes",
+  {
+    like: { type: DataTypes.INTEGER, defaultValue: 1 },
+  },
+  {timestamps: true}
+);
+
+Users.belongsToMany(Posts, { through: { model: Post_comments, unique: false }});
+Posts.belongsToMany(Users, { through: { model: Post_comments, unique: false }});
+
+Songs.belongsToMany(Users, { through: { model: Song_comments, unique: false }});
+Users.belongsToMany(Songs, { through: { model: Song_comments, unique: false }});
+
+Songs.belongsToMany(Users, { through: Song_likes });
+Users.belongsToMany(Songs, { through: Song_likes });
+
+Users.belongsToMany(Posts, { through: Post_likes });
+Posts.belongsToMany(Users, { through: Post_likes });
 
 Albums.hasMany(Songs, { onDelete: "cascade" });
 Songs.belongsTo(Albums);
 
-Users.hasMany(Post_details, {onDelete: "cascade"});
-Post_details.belongsTo(Users);
+// Post_comments on delete
+Users.hasMany(Post_comments, {onDelete: "cascade"});
+Post_comments.belongsTo(Users);
 
-Users.hasMany(Song_details, {onDelete: "cascade"});
-Song_details.belongsTo(Users);
+Posts.hasMany(Post_comments, {onDelete: "cascade"});
+Post_comments.belongsTo(Posts);
 
-Posts.hasMany(Post_details, {onDelete: "cascade"});
-Post_details.belongsTo(Posts);
+// Song_comments on delete
+Users.hasMany(Song_comments, {onDelete: "cascade"});
+Song_comments.belongsTo(Users);
+
+Songs.hasMany(Song_comments, {onDelete: "cascade"});
+Song_comments.belongsTo(Songs);
+
+// Song_likes on delete
+Users.hasMany(Song_likes, {onDelete: "cascade"});
+Song_likes.belongsTo(Users);
+
+Songs.hasMany(Song_likes, {onDelete: "cascade"});
+Song_likes.belongsTo(Songs);
+
+// Post_likes on delete
+Users.hasMany(Post_likes, {onDelete: "cascade"});
+Post_likes.belongsTo(Users);
+
+Posts.hasMany(Post_likes, {onDelete: "cascade"});
+Post_likes.belongsTo(Posts);
 
 export {
   Users,
   Posts,
   Songs,
   Albums,
-  Post_details,
-  Song_details
+  Post_comments,
+  Song_comments,
+  Post_likes,
+  Song_likes
 };

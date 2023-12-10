@@ -1,4 +1,4 @@
-import { Post_details, Posts, Users } from "../models/models.js";
+import { Post_comments, Post_likes, Posts, Users } from "../models/models.js";
 
 class Post {
   async get(req, res) {
@@ -15,8 +15,8 @@ class Post {
           ],
           include: [
             {
-              model: Post_details, 
-              attributes: ["comment", "like"],
+              model: Post_comments, 
+              attributes: ["comment"],
               include: [Users]
             }
           ],
@@ -69,11 +69,24 @@ class Post {
     }
   }
   
-  async add_details(req, res) {
+  async add_comments(req, res) {
     try {
     
       const {comment, userId, postId} = req.body
-      await Post_details.create({comment, userId, postId})
+      await Post_comments.create({comment, userId, postId})
+        .then(() => res.json({created: true}))
+        .catch((e) => res.json({error: e.message}))
+
+    } catch (e) {
+      res.json(e.message);
+    }
+  }
+
+  async add_likes(req, res) {
+    try {
+    
+      const {userId, postId} = req.body
+      await Post_likes.create({userId, postId})
         .then(() => res.json({created: true}))
         .catch((e) => res.json({error: e.message}))
 
