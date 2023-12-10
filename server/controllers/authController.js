@@ -26,16 +26,10 @@ class Auth {
       if (!valid) {
         return res.json({loggedIn: false, message: "Incorrect password"});
       } 
-      
+      const { ["password"]: unused, ...user_data } = user;
       res.json({
         loggedIn: true, 
-        name: user.name,
-        email: user.email,
-        role: user.role, 
-        image: {
-          contentType: user.contentType,
-          base64: user.imageBase64
-        }});
+        user: user_data});
 
     } catch (e) {
       res.json(e.message);
