@@ -56,13 +56,14 @@ function SignIn(props){
         if(props.status[4] === "login"){
             signIn(emailHook, lockHook)
             .then(res=>{
-                dispatch(setStateUser(res))
-                return  navigate('../'+res.data.login)
+                //console.log(res)
+                dispatch(setStateUser(res.data.user.name))
+                return  navigate('../'+res.data.user.name)
             })
             .catch(e=>console.log(e))
         }
         else{
-            signUp(emailHook, lockHook)
+            signUp(emailHook,loginHook, lockHook)
             .then(res=>{
                 //console.log(res)
         
