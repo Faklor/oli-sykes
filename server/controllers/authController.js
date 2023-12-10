@@ -1,4 +1,6 @@
 import bcrypt from "bcrypt";
+import fs from 'fs'
+import path from "path"
 import {validationResult} from 'express-validator'
 import { Users } from "../models/models.js";
 
@@ -27,6 +29,7 @@ class Auth {
       
       res.json({
         loggedIn: true, 
+        name: user.name,
         email: user.email,
         role: user.role, 
         image: {
@@ -42,7 +45,7 @@ class Auth {
   // Reg POST
   async register(req, res) {
 
-    const { email, password } = req.body;
+    const { name, email, password } = req.body;
     try {
 
       const errors = validationResult(req);
@@ -51,9 +54,41 @@ class Auth {
       }
 
       const hash_pass = await bcrypt.hashSync(password, 6);
-      await Users.create({ email, password: hash_pass })
+      await Users.create({ name, email, password: hash_pass })
         .then(() => res.json({message: true}))
-        .catch(() => res.json({message: false}));
+        .catch((e) => res.json({error: e.message}));
+
+    } catch (e) {
+      res.json(e.message);
+    }
+  }
+
+  async Update_user_pic(req, res) {
+    try {
+
+      const {email} = req.body
+      
+      if(!email) { 
+        return res.status(400).json({error: "Empty Body"})
+      }
+
+      const file = req.file
+      const img = fs.readFileSync(file.path)
+      const encode_image = img.toString('base64')
+
+      await Users.update({
+        filename: file.originalname,
+        contentType: file.mimetype,
+        imageBase64: encode_image}, {where: {email}})
+        .then(() => {
+
+          res.json({updated: true}) 
+          fs.readdirSync("./uploads").forEach(file => {
+            fs.rmSync(path.join("./uploads", file));
+          });
+
+        })
+        .catch((e) => res.json({error: e.message}))
 
     } catch (e) {
       res.json(e.message);

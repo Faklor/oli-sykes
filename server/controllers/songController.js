@@ -1,4 +1,4 @@
-import { Songs, Albums, Song_details } from "../models/models.js";
+import { Songs, Albums, Song_comments, Song_likes } from "../models/models.js";
 
 class Song {
   async get(req, res) {
@@ -52,14 +52,27 @@ class Song {
     }
   }
   
-  async add_details(req, res) {
+  async add_comments(req, res) {
     try {
       
-      const {comment, userId, postId} = req.body
-      await Song_details.create({comment, userId, songId})
+      const {comment, userId, songId} = req.body
+      await Song_comments.create({comment, userId, songId})
         .then(() => res.json({created: true}))
         .catch((e) => res.json({error: e.message}))
 
+    } catch (e) {
+      res.json(e.message);
+    }
+  }
+
+  async add_likes(req, res) {
+    try {
+
+      const {userId, songId} = req.body
+      await Song_likes.create({userId, songId})
+        .then(() => res.json({created: true}))
+        .catch((e) => res.json({error: e.message}))
+        
     } catch (e) {
       res.json(e.message);
     }

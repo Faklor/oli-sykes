@@ -18,9 +18,7 @@ class Album {
           ],
         })
     
-      res.json({
-        data: { albums: albums, songs: songs},
-      });
+      res.json({ albums: albums, songs: songs });
     } catch (e) {
       res.json(e.message);
     }
