@@ -40,7 +40,7 @@ const animateBarUnCheck = ()=>{
         translateX: function(el, i) {
           return 0 * i
         },
-        rotate: function(el, i) { return anime.random(-360, 360)*i },
+        rotate:[function(el, i) { return anime.random(-360, 360)*i }],
         duration: function() { return anime.random(10, 100) },
         delay: function() { return anime.random(10, 100) },
         opacity:function(el,i,l){return (l-i)-3},

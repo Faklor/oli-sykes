@@ -15,13 +15,14 @@ import {
 from './animate'
 import { useNavigate,useLocation } from "react-router-dom"
 //----------------redux--------------------------------------
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import {
     selectItems,
     
 } from '../store/nowPointMenu'
 import {
-    selectUser
+    selectUser,
+    setDefaultImage
 } from '../store/nowUser'
 //-----------------------------------------------------------
 
@@ -36,6 +37,7 @@ const NavMenu = props =>{
     //-------redux-----------------------
     let selector = useSelector(selectItems)
     let selectorUser = useSelector(selectUser)
+    const dispatch = useDispatch()
     //================default-values=====================
 
     let defaultList = [
@@ -75,14 +77,24 @@ const NavMenu = props =>{
                defaultList.splice(key,1,{...selectorUser, name:a})
             }
         })
+        
     }
+    
     //------------------------------------------------------------------------
     //===================================================
     useEffect(()=>{
-        
-        
+        dispatch(setDefaultImage(user))
+        //-------------navClick--------------------------
+        window.onclick = (e)=>{
+            let a = e.target.className
+            if(a !== "item"){
+                animateBarUnCheck()
+                setCheck(false)
+            }
 
-    },[])
+        }
+
+    },[dispatch, selectorUser])
     //=====================render======================== 
     const items = selector.map((i, index)=>{
         
@@ -120,7 +132,6 @@ const NavMenu = props =>{
             
         }
         //====================================
-        
     }
     //===================================================
    

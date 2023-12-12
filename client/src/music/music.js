@@ -5,14 +5,17 @@ import YouTube from 'react-youtube'
 
 import './music.scss'
 //-----------------axios------------------------
-import axios from 'axios'
+import { songAll } from '../components/axiosRouterGet' 
 import { useEffect } from "react"
 
 //import axios from 'axios'
 
 const Songs= props=>{
 
-
+    useEffect(()=>{
+        songAll()
+        .catch(e=>console.log(e))
+    }, [])
     const albums = [
         {
             id:1,

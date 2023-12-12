@@ -1,33 +1,29 @@
 import { createSlice } from "@reduxjs/toolkit"
 
 //================================================Create============================================================================
-export const setUser = createSlice({
-    name:'user',
+export const setEdit = createSlice({
+    name:'editAccount',
     initialState:{
-        user:null,
+        editAccount:false,
         
 
     },
     reducers:{
-        setStateUser: (state, action)=>{
-            
-           state.user = action.payload
-        },
-        setDefaultImage:(state,action)=>{
-            if(state.user !== null){
-                
-                if(state.user.filename === null){
-                    state.user.filename = action.payload
-                }
+        setStateEdit: (state)=>{
+            if(state.editAccount){
+                state.editAccount = false
             }
-            
-        }
+            else{
+                state.editAccount = true
+            }
+           
+        },
     }
 })
 //==============================================Dispatch============================================================================
-export const {setStateUser, setDefaultImage} = setUser.actions 
+export const {setStateEdit} = setEdit.actions 
 //===============================================Selector===========================================================================
-export const selectUser = (state) => state.user.user
+export const selectEdit = (state) => state.editAccount.editAccount
 //================================================Reducer===========================================================================
 
-export default setUser.reducer
+export default setEdit.reducer
