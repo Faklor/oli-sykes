@@ -47,6 +47,12 @@ class Auth {
         return res.json({error: errors.mapped()});
       }
 
+      const user = await Users.findOne({ raw: true, where: { email } });
+
+      if (user) {
+        return res.json({message: "User already exist"});
+      } 
+
       const hash_pass = await bcrypt.hashSync(password, 6);
       await Users.create({ name, email, password: hash_pass })
         .then(() => res.json({message: true}))
