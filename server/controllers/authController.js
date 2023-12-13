@@ -91,7 +91,16 @@ class Auth {
 
   async get(req, res) {
     try {
+
       const users = await Users.findAll({})
+      users.forEach((res, id) => {
+        Object.keys(res.dataValues).forEach(item => {
+          if (item == "createdAt" || item == "updatedAt") {
+            users[id].dataValues[item] = new Date(res[item]).toISOString().slice(0, 10);
+          } 
+        })
+      })
+
       res.json({
         users
       });
