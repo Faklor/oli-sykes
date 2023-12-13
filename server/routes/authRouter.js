@@ -19,4 +19,6 @@ router.post("/registration", [
 
 router.post("/image", images, Auth.Update_user_pic)
 
+router.get("/users",Auth.get)
+
 export default router

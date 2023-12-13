@@ -1,0 +1,35 @@
+.dashboard{
+    width: 90em;
+    height: 40em;
+    align-self: end;
+    margin: 0 auto;
+    background-color: #28293D;
+    border-radius: 10px;
+    box-shadow: 0 0 4px 2px rgba(0, 0, 0, 0.25);
+    //transition: 0.1s;
+
+    .dashUsers{
+        width: 100%;
+        border-spacing: 0 1em;
+        padding: 1em;
+
+        thead{
+            font-size: 40px;
+        }
+        tbody{
+            font-size: 18px;
+            tr{
+                background-color: #37476C;
+                text-align: center;
+                button{
+                    padding: 0.5em 1em;
+                    margin:0.5em auto;
+                    background-color: #5771AD;
+                    border:none;
+                    border-radius: 5px;
+                    color: #fff;
+                }
+            }
+        }   
+    }
+}

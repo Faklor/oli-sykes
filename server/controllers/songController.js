@@ -3,9 +3,9 @@ import { Songs, Albums, Song_comments, Song_likes } from "../models/models.js";
 class Song {
   async get(req, res) {
     try {
-
+      const songs = await Songs.findAll({})
       res.json({
-
+        songs
       });
       
     } catch (e) {

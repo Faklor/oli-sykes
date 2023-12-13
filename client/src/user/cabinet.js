@@ -1,4 +1,4 @@
-import './cabinet.scss'
+import './scss/cabinet.scss'
 //----------------redux----------------------------------
 import { useSelector, useDispatch } from 'react-redux'
 import {

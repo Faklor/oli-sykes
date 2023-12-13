@@ -1,4 +1,4 @@
-import './sign.scss'
+import './scss/sign.scss'
 import { Link, useNavigate} from "react-router-dom"
 import { loginOpacity1 } from '../components/animate'
 import Error  from './error'
@@ -98,6 +98,7 @@ function SignIn(props){
                     })
                     setEr(array)
                     
+                    
                 }
                 else if(res.data.loggedIn === false){
                     let array = [`${res.data.message}`]
@@ -105,8 +106,14 @@ function SignIn(props){
                     setEr(array)
                 }
                 else{
-                    dispatch(setStateUser(res.data.user))
                     
+                    signIn(emailHook, lockHook)
+                    .then(res=>{
+                        dispatch(setStateUser(res.data.user))
+                    })
+                    .catch(e=>{
+
+                    })
                 }
             })
             .catch(e=>{

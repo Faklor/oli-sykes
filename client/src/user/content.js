@@ -13,8 +13,8 @@ import {
     selectUser,  
     setStateUser
 } from '../store/nowUser'
-import CryptoJS from 'crypto-js'
-//======================================================s
+//======================================================
+import user from '../res/user.svg'
 
 export default function Content(props){
     //==================state===========================
@@ -65,14 +65,21 @@ export default function Content(props){
                 
         }
     }
-    
+    console.log(selectorUser)
+
+    function setImage(){
+        if(selectorUser.imageBase64 !== null){
+            return <img src={`data:${selectorUser.contentType};base64,${''}` || user} alt='imgUser'/>
+        }
+        return <img src={user} alt="imgUser"/>
+    }
 
     return(
         <>
             <div className="cabinet">
                 
                 <div>
-                    <img src={`data:${selectorUser.contentType};base64,${''}`} alt='imgUser'/>
+                    {setImage()}
                     
                     <button onClick={setEdit}>Edit <br/>Image</button>
                 </div>

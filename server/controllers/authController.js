@@ -88,6 +88,18 @@ class Auth {
       res.json(e.message);
     }
   }
+
+  async get(req, res) {
+    try {
+      const users = await Users.findAll({})
+      res.json({
+        users
+      });
+      
+    } catch (e) {
+      res.json(e.message);
+    }
+  }
 }
 
 export default new Auth();

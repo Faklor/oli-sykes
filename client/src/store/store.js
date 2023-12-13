@@ -26,9 +26,12 @@ const persistedReducer = persistReducer(persistConfig, nowUser)
 //========================================================================
 const store = configureStore({
   reducer: {
+    //user + localStorage
     user:persistedReducer,
+    //navMenu
     nowPointMenu: setPointMenu,
     editAccount: editAccount,
+    //dashboard
   },
   devTools: process.env.NODE_ENV !== 'production',
   middleware: [thunk]
