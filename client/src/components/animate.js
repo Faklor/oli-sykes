@@ -40,7 +40,7 @@ const animateBarUnCheck = ()=>{
         translateX: function(el, i) {
           return 0 * i
         },
-        rotate: function(el, i) { return anime.random(-360, 360)*i },
+        rotate:[function(el, i) { return anime.random(-360, 360)*i }],
         duration: function() { return anime.random(10, 100) },
         delay: function() { return anime.random(10, 100) },
         opacity:function(el,i,l){return (l-i)-3},
@@ -63,10 +63,47 @@ const loginOpacity1 = ()=>{
         translateX:-150,
     })
 }
-//===================================================
+//=======================dashboard===================
+const dashContent = ()=>{
+    anime({
+        targets:'.dashboard',
+        translateY: [360,0],
+        scale: [0.25,1],
+        duration: 500,
+        opacity:[0,1],
+        easing: 'easeInOutExpo',
+        delay:100,
+    })
+}
+const deleteItem = index=>{
+    anime({
+        targets:'.tableItem',
+        translateX:function(el, i){
+             
+            if(i === index){
+                return  -1500
+            }
+        },
+        translateY:function(el, i){
+            if(i !== index && i > index){
+                return -61
+            }
+        },
+        easing: 'easeInOutExpo',
+        opacity:function(el, i){
+            if(i === index){
+                return  0
+            }
+        },
+    })
+}
 export {
     animateBarCheck,
     animateBarUnCheck,
+    //-------------------
     loginOpacity1,
+    //-------------------
+    dashContent,
+    deleteItem
 }
 //===================================================

@@ -16,9 +16,14 @@ import Blog from './blog/blog'
 import User from './user/user'
 import Cabinet from './user/cabinet'
 import SignIn from './user/signIn'
-//import SignUp from './user/signUp'
-import hoc from './user/HocSing'
+import hoc from './user/hoc/HocSing'
+//-------------dashboard---------------------
+import Dashboard from './user/dashboard'
+import Dash from './user/components/dash'
+import DashGraph from './user/components/dashGraph'
+import hocDash from './user/hoc/hocDash'
 
+import {users} from './components/axiosRouterGet'
 //============components=====================
 import {
   createBrowserRouter,
@@ -29,6 +34,9 @@ import {
 //==============parallax=====================
 
 const SignUp = hoc(['Register','SignUp', 'Sign In', 'signIn','registration'])(SignIn)
+
+//----------------dash-----------------------
+const Users = hocDash({lable:'users',method:users})(Dash)
 
 const router = createBrowserRouter([
   { path:'/', element:<Navigate to='/Home' replace={true}/> },
@@ -47,7 +55,12 @@ const router = createBrowserRouter([
       { path: ':userName', element:<Cabinet/> },
       { path: 'signIn', element:<SignIn status={['Login','SignIn', 'Create Account', 'signUp','login']}/>},
       { path: 'signUp', element:<SignUp/> },
-      { path: 'dashboard',}
+      { path: 'dashboard', element:<Dashboard/>, children:[
+        {path: 'graph', element:<DashGraph/>},
+        {path: 'users', element:<Users/>},
+        {path: 'music', element:<Users/>},
+        {path: 'blogs', element:<Users/>},
+      ]}
     ]
   },
   

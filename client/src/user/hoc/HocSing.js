@@ -7,7 +7,7 @@ const Hoc = (props)=> (Companent)=>{
            
             return <Companent status={props}/>
         }
-
+ 
         
     } 
     

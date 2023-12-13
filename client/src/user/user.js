@@ -1,25 +1,10 @@
 import Header from "../components/header"
 
-import './user.scss'
-//===============components====================
-//=============================================
+import './scss/user.scss'
 import { Outlet } from "react-router-dom"
-//----------------redux----------------------------------
-//---------------HOC-------------------------------------
 
 
 const User= props=>{
-    //===============stete====================
-    //const [check, setCheck] = useState(true)
-    //===============navigat==================
-    //const location = useLocation()
-    //===============redux====================
-    
-    //========================================
-
-
-    
-
     return(
         <>
             <Header/>

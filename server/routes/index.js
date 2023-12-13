@@ -9,6 +9,6 @@ const router = new Router();
 router.use("/api/song", songRouter)
 router.use("/api/post", postRouter)
 router.use("/api/album", albumRouter)
-router.use("/api", authRouter)
+router.use("/api", authRouter) 
 
 export default router

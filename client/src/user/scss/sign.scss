@@ -6,7 +6,7 @@
     text-align: center;
     justify-self: center;
     align-self: center;
-    //width: 320px;
+    width: 260px;
     img{
         height: 10em;
     }
@@ -52,6 +52,9 @@
             }
 
         }
+    }
+    .error{
+        color: #b1675d;
     }
     button{
         display: block;

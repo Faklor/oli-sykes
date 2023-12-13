@@ -1,10 +1,18 @@
-import './cabinet.scss'
+import './scss/cabinet.scss'
 //----------------redux----------------------------------
 import { useSelector, useDispatch } from 'react-redux'
-import {selectUser,  setStateUser} from '../store/nowUser'
+import {
+    selectUser,  
+    setStateUser
+} from '../store/nowUser'
+import {
+    setStateEdit
+} from '../store/editAccount'
 //===============navigate================================
 import { useNavigate, useParams } from 'react-router-dom'
 import { useEffect } from 'react'
+//==============componet=================================
+import Content from './content'
 
 export default function Cabinet(){
     //-----------------redux--------------------------
@@ -14,7 +22,7 @@ export default function Cabinet(){
     const navigate = useNavigate()
     let { userName } = useParams()
     //==================state=========================
-    //================================================
+    //================================================ 
    
 
     useEffect(()=>{
@@ -22,30 +30,30 @@ export default function Cabinet(){
             
            return navigate('../User/signIn')
         }
-    })
+        else{
+            return navigate('../'+selectorUser.name)
+        }
+    },[navigate, selectorUser])
     
     //================function========================
     function outAccount(){
         dispatch(setStateUser(null))
         return navigate('../signIn')
     }
+    
     //===============render-function==================
     function render(){
         if(userName !== selectorUser.name){
-            return <h1>User not Found</h1>
+            return <h1 className='cabinet'>User not Found</h1>
         }
-        return <div className="cabinet">
-            <img src={selectorUser.img} alt='imgUser'/>
-            <h1>{selectorUser.name}</h1>
-            <button onClick={outAccount}>Edit</button>
-            <button onClick={outAccount}>Log out</button>
-        </div>
+        return <Content {...selectorUser} />
     }
-   
+    
 
     return(
         <>
             {render()}
+            <button onClick={outAccount}>Log out</button>
         </>
     )
 } 
