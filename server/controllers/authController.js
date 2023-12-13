@@ -1,8 +1,10 @@
 import bcrypt from "bcrypt";
+import pkg from 'sequelize';
 import fs from 'fs'
 import path from "path"
 import {validationResult} from 'express-validator'
 import { Users } from "../models/models.js";
+const {Op} = pkg;
 
 class Auth {
   // Login POST
@@ -47,10 +49,18 @@ class Auth {
         return res.json({error: errors.mapped()});
       }
 
-      const user = await Users.findOne({ raw: true, where: { email } });
+      const user = await Users.findOne({ 
+        raw: true, 
+        where: { 
+          [Op.or]: [
+            {email},
+            {name}
+          ]
+        }
+      });
 
       if (user) {
-        return res.json({message: "User already exist"});
+        return res.json({error: {message: "User already exist"}});
       } 
 
       const hash_pass = await bcrypt.hashSync(password, 6);
