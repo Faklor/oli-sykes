@@ -10,9 +10,13 @@ const signUp =async (email,login, password) => await axios.post('http://localhos
 const editImg =async (formData) => await axios.post('http://localhost:5000/api/image', formData)
 //--------------------------deleteUser-------------------------
 const deleteUser =async () => await axios.post()
+
+//--------------------------addSong----------------------------
+const addSong =async (title, url, albumId) => await axios.post('http://localhost:5000/api/song/create',{title:title,url:url,albumId:albumId})
 //==================export=====================================
 export {
     signIn,
     signUp,
-    editImg
+    editImg,
+    addSong
 } 

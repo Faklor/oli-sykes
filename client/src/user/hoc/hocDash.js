@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react'
 
 
-const HocSong = ({lable,method})=> (Companent)=>{
+const HocSong = ({lable,method,titles,addItem})=> (Companent)=>{
     return function Comnponent(){
         //===================state===========================
         const [array, setArray] = useState([])
 
 
         useEffect(()=>{
-           
+            
             method()
             .then(res=>{
                 setArray(res.data[lable])
@@ -20,11 +20,11 @@ const HocSong = ({lable,method})=> (Companent)=>{
            
 
            
-        },[array])
+        },[])
         
          
        
-        return <Companent array={array}/>
+        return <Companent lable={lable} array={array} titles={titles} addItem={addItem}/>
  
         
     } 
