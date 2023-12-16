@@ -58,6 +58,13 @@ const Songs = sequelize.define("songs", {
 const Post_comments = sequelize.define(
   "post_comments",
   {
+    id: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+      primaryKey: true,
+      unique: true,
+      allowNull: false,
+    },
     comment: { type: DataTypes.TEXT, required: true },
   },
   {timestamps: true}
@@ -74,6 +81,13 @@ const Post_likes = sequelize.define(
 const Song_comments = sequelize.define(
   "song_comments",
   {
+    id: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+      primaryKey: true,
+      unique: true,
+      allowNull: false,
+    },
     comment: { type: DataTypes.TEXT, required: true },
   },
   {timestamps: true}

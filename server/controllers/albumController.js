@@ -1,4 +1,4 @@
-import pkg, { Sequelize } from 'sequelize'
+import pkg from 'sequelize'
 import { Albums, Song_comments, Song_likes, Songs, Users } from "../models/models.js";
 const Op = pkg
 
@@ -11,30 +11,34 @@ class Album {
           
           where: {albumId: req.params.id},
           include: [
-            {
-              model: Song_likes,
-              where: {
-                songId: [Op.col("id")]
-              }
-            },
+            { model: Song_likes },
             {
               model: Song_comments,
-              attributes: ["comment"],
+              attributes: ["comment", "createdAt"],
               include: [{
                 model: Users, 
                 attributes: {
-                  exclude: ['createdAt', 'updatedAt', 'password']
+                  exclude: ['updatedAt', 'password']
                 }
               }]
             }
           ],
         })
           .then((songs) => {
-            songs.forEach((res, id) => {
+            songs.map((res) => {
               Object.keys(res.dataValues).forEach(item => {
                 if (item == "song_likes") {
-                  songs[id].dataValues[item] = songs[id].dataValues[item].length
-                } 
+                  res.dataValues[item] = res.dataValues[item].length
+                }
+                if (item == "song_comments") {
+                  res.dataValues[item].map(i => {
+                    Object.keys(i.dataValues).forEach(attr => {
+                      if (attr == "createdAt") {
+                        i.dataValues[attr] = new Date(i[attr]).toISOString().slice(0, 10);
+                      }  
+                    })
+                  })
+                }
               })
             })
             res.json({songs})
