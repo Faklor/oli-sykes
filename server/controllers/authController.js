@@ -1,8 +1,10 @@
 import bcrypt from "bcrypt";
+import pkg from 'sequelize';
 import fs from 'fs'
 import path from "path"
 import {validationResult} from 'express-validator'
 import { Users } from "../models/models.js";
+const {Op} = pkg;
 
 class Auth {
   // Login POST
@@ -46,6 +48,20 @@ class Auth {
       if (!errors.isEmpty()) {
         return res.json({error: errors.mapped()});
       }
+
+      const user = await Users.findOne({ 
+        raw: true, 
+        where: { 
+          [Op.or]: [
+            {email},
+            {name}
+          ]
+        }
+      });
+
+      if (user) {
+        return res.json({error: {message: "User already exist"}});
+      } 
 
       const hash_pass = await bcrypt.hashSync(password, 6);
       await Users.create({ name, email, password: hash_pass })
@@ -94,7 +110,16 @@ class Auth {
 
   async get(req, res) {
     try {
+
       const users = await Users.findAll({})
+      users.forEach((res, id) => {
+        Object.keys(res.dataValues).forEach(item => {
+          if (item == "createdAt" || item == "updatedAt") {
+            users[id].dataValues[item] = new Date(res[item]).toISOString().slice(0, 10);
+          } 
+        })
+      })
+
       res.json({
         users
       });
