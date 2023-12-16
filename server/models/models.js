@@ -81,9 +81,7 @@ const Song_comments = sequelize.define(
 
 const Song_likes = sequelize.define(
   "song_likes",
-  {
-    like: { type: DataTypes.INTEGER, defaultValue: 1 },
-  },
+  {},
   {timestamps: true}
 );
 

@@ -30,9 +30,7 @@ class Song {
     try {
       
       const {id} = req.body
-      
-        await Songs.destroy({where: {id}})
-      
+      await Songs.destroy({where: {id}})
       res.json({deleted: true})
 
     } catch (e) {
@@ -42,12 +40,12 @@ class Song {
 
   async update(req, res) {
     try {
+
       const { id, title, url, albumId } = req.body
 
-      await Songs.update({title, url, albumId},{where:{id}})
-      res.json({
-        update:true
-      });
+      await Songs.update({title, url, albumId}, {where:{id}})
+        .then(() => res.json({updated: true}))
+        .catch((e) => res.json({error: e.message}))
 
     } catch (e) {
       res.json(e.message);

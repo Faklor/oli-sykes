@@ -47,9 +47,7 @@ class Post {
     try {
 
       const {id} = req.body
-      id.map(async(res) => (
-        await Posts.destroy({where: {id}})
-      ))
+      await Posts.destroy({where: {id}})
       res.json({deleted: true})
 
     } catch (e) {
