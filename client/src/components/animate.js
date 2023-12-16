@@ -83,12 +83,15 @@ const deleteItem = index=>{
             if(i === index){
                 return  -1500
             }
+
         },
-        translateY:function(el, i){
+        translateY:[function(el, i){
             if(i !== index && i > index){
-                return -61
+                return "-=61"
             }
-        },
+            
+        }],
+        //margin:20,
         easing: 'easeInOutExpo',
         opacity:function(el, i){
             if(i === index){

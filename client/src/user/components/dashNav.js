@@ -4,6 +4,8 @@ import dashGraph from '../../res/dashGraph.png'
 import dashUser from '../../res/dashUser.png'
 import dashMusic from '../../res/dashMusic.png'
 import dashBlog from '../../res/dashBlog.png'
+import dashAlbum from '../../res/dashAlbum.png'
+import user from '../../res/user.svg'
 //=====================animate=======================
 import {
     dashContent
@@ -16,22 +18,28 @@ const DashNav = ()=>{
     const navigate = useNavigate()
     const location = useLocation()
     //==================state========================
-    const [mus, setG] = useState([<div/>,'','',''])
+    const [mus, setG] = useState([<div/>,'','','','',''])
     //===============================================
     useEffect(()=>{
         let simpleLoc = location.pathname.match(/\/\w+$/)[0].replace('/','')
        
         if(simpleLoc === "graph"){
-            setG([<div/>,'','',''])
+            setG([<div/>,'','','','',''])
         }
         else if(simpleLoc === "users"){
-            setG(['',<div/>,'',''])
+            setG(['',<div/>,'','','',''])
         }
         else if(simpleLoc === "music"){
-            setG(['','',<div/>,''])
+            setG(['','',<div/>,'','',''])
         } 
         else if(simpleLoc === "blogs"){
-            setG(['','','',<div/>])
+            setG(['','','',<div/>,'',''])
+        }
+        else if(simpleLoc === "albums"){
+            setG(['','','','',<div/>,''])
+        }
+        else if(simpleLoc === "cabinet"){
+            setG(['','','','','',<div/>])
         }
 
 
@@ -61,6 +69,14 @@ const DashNav = ()=>{
             <div className='dashItem' onClick={setContent}>
                 <img src={dashBlog} alt="blogs"/>
                 {mus[3]}
+            </div>
+            <div className='dashItem' onClick={setContent}>
+                <img src={dashAlbum} alt="albums"/>
+                {mus[4]}
+            </div>
+            <div className='dashItem' onClick={setContent}>
+                <img src={user} alt="cabinet"/>
+                {mus[5]}
             </div>
             
         </nav>

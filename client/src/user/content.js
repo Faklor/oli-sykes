@@ -1,4 +1,4 @@
-import { useRef } from "react"
+import { useRef, useState } from "react"
 //========================redux=========================
 import { useDispatch, useSelector } from "react-redux"
 import {
@@ -19,15 +19,13 @@ import user from '../res/user.svg'
 export default function Content(props){
     //==================state===========================
     const fileRef = useRef(null)
+    const [error, setError] = useState('')
     //==================redux===========================
     const selectorEdit = useSelector(selectEdit)
     const selectorUser = useSelector(selectUser)
     const dispatch = useDispatch()
     //==================================================
 
-    // useEffect(()=>{
-    //     console.log(fileRef)
-    // },[fileRef])
     function sendFileOnClient(){
         
         const formData = new FormData()
@@ -35,17 +33,30 @@ export default function Content(props){
         formData.append("email", props.email)
         formData.append("pic", image)
 
-        // for(let pair of formData.entries()) {
-        //     console.log(`${pair[0]}: ${pair[1]}`)
-        // }
-
         editImg(formData)
-        signIn(props.email, '2351')
-        .then(res=>[
-            dispatch(setStateUser(res.data.user))
-        ])
+        .then(res=>{
+           
+            if(res.data.error){
+                setError('Image size is too big < 100kB')
+            }
+            else{
+                setError('')
+                editImg(formData)
+                .then(res=>{
+                    dispatch(setStateUser(res.data.user))
+                })
+                .catch(e=>{
+                    
+                })
+            }
+            
+            
+        })
+        .catch(e=>{
+
+        })
         
-        console.log(selectorUser)
+        //console.log(selectorUser)
     }
     //--------------------------------------------------
     function setEdit(){
@@ -60,16 +71,17 @@ export default function Content(props){
         else{
             return <div>
                 <input type='file' ref={fileRef}/>
-                <input type='button' onClick={sendFileOnClient} value='Edit'/>
+                <p className="error">{error}</p>
+                <button onClick={sendFileOnClient}>Edit</button>
             </div>
                 
         }
     }
-    console.log(selectorUser)
+    //console.log(selectorUser)
 
     function setImage(){
         if(selectorUser.imageBase64 !== null){
-            return <img src={`data:${selectorUser.contentType};base64,${''}` || user} alt='imgUser'/>
+            return <img src={`data:${selectorUser.contentType};base64,${selectorUser.imageBase64}`} alt='imgUser'/>
         }
         return <img src={user} alt="imgUser"/>
     }

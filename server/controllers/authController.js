@@ -50,7 +50,7 @@ class Auth {
       const hash_pass = await bcrypt.hashSync(password, 6);
       await Users.create({ name, email, password: hash_pass })
         .then(() => res.json({message: true}))
-        .catch((e) => res.json({error: e.message}));
+        .catch((e) => res.json({loggedIn: false, message: "User already't exist"}));
 
     } catch (e) {
       res.json(e.message);
@@ -66,9 +66,12 @@ class Auth {
         return res.status(400).json({error: "Empty Body"})
       }
 
+      
       const file = req.file
       const img = fs.readFileSync(file.path)
       const encode_image = img.toString('base64')
+
+      const user = await Users.findOne({where:{email}})
 
       await Users.update({
         filename: file.originalname,
@@ -76,7 +79,7 @@ class Auth {
         imageBase64: encode_image}, {where: {email}})
         .then(() => {
 
-          res.json({updated: true}) 
+          res.json({updated: true, user:user}) 
           fs.readdirSync("./uploads").forEach(file => {
             fs.rmSync(path.join("./uploads", file));
           });

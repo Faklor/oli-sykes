@@ -38,9 +38,13 @@ function SignIn(props){
 
     useEffect(()=>{
         loginOpacity1()
-        if(selectorUser != null){
-           return navigate('../User/')
+        if(selectorUser !== null){
+            if(selectorUser.role === "ADMIN"){
+                return navigate('../dashboard/graph')
+            }
+            return navigate('../User/')
         }
+         
 
         
     }) 
@@ -77,6 +81,7 @@ function SignIn(props){
                     setEr(array)
                 }
                 else{
+                    
                     dispatch(setStateUser(res.data.user))
                     
                 }

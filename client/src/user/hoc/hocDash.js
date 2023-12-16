@@ -1,30 +1,36 @@
 import { useEffect, useState } from 'react'
+import {albums} from '../../components/axiosRouterGet'
 
 
-const HocSong = ({lable,method,titles,addItem})=> (Companent)=>{
+const HocSong = ({lable,method,titles,addItem, deleteItemMethod,editItem})=> (Companent)=>{
     return function Comnponent(){
         //===================state===========================
-        const [array, setArray] = useState([])
+        const [allAlbums,  setAllAlbums] = useState([])
 
 
         useEffect(()=>{
-            
-            method()
+           
+            albums()
             .then(res=>{
-                setArray(res.data[lable])
+                setAllAlbums(res.data.albums)
             })
             .catch(e=>{
-                console.log(e)
-            })
-           
-           
 
-           
+            })
+
         },[])
         
          
        
-        return <Companent lable={lable} array={array} titles={titles} addItem={addItem}/>
+        return <Companent 
+            lable={lable} 
+            method={method} 
+            titles={titles} 
+            addItem={addItem} 
+            albums={allAlbums} 
+            deleteItemMethod={deleteItemMethod} 
+            editItem={editItem}
+        />
  
         
     } 

@@ -1,49 +1,149 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import {
     deleteItem 
 } from '../../components/animate'
-import DashContent from './dashContent'
 import { Outlet } from 'react-router-dom'
 
-const DashUsers = ({lable,array,titles,addItem}) =>{
+const DashUsers = ({lable,method,titles,addItem,deleteItemMethod, albums,editItem}) =>{
     //==============state=================================
     const [add, setAdd] = useState(false)
+    const [edit, setEdit] = useState(false)
+    const [array, setArray] = useState([])
+    
     //--------------input---------------------------------
-    const [in1, setIn1] = useState('')
-    const [in2, setIn2] = useState('')
-    const [in3, setIn3] = useState('')
+    const [in1, setIn1] = useState("")
+    const [in2, setIn2] = useState("")
+    const [select, setSelect] = useState()
+   
     //==============navigate==============================
     
-    function deleteUser(index){
+    function deleteMethod(index, id){
         deleteItem(index)
-        //console.log(index)
+        deleteItemMethod(id)
+        
     }
-    //console.log(addItem)
+    function editMethod(id, title, url){
+        
+        if(in1 === ""  || in2 === ""){
+            editItem(id,title,url,select)
+            .then(res=>{
+                method()
+                .then(res=>{
+                    setArray(res.data[lable])
+                })
+                .catch(e=>{
+                    
+                })
+            })
+            .catch(e=>{
     
+            })
+        }
+        else{
+            editItem(id,in1,in2,select)
+            .then(res=>{
+                method()
+                .then(res=>{
+                    setArray(res.data[lable])
+                })
+                .catch(e=>{
+                    
+                })
+            })
+            .catch(e=>{
+    
+            })
+        }
+        
+       
+        
+    }
+    useEffect(()=>{
+        
+        
+        method()
+        .then(res=>{
+            setArray(res.data[lable])
+            setSelect(albums[0].id)
+        })
+        .catch(e=>{
+
+        })
+        
+    },[albums, method, lable])
+    //console.log(select)
     //==================render============================
-    function setVisible(){
+    function setVisibleAdd(){
         if(lable === "users"){
             return
         }
         else{
             if(add){
                 return <tr>
-                    <td></td>
+                    <td><button className='add' onClick={()=>setAdd(false)}>Cancel</button></td>
                     <td><input value={in1} onChange={(e)=>setIn1(e.target.value)}/></td>
                     <td><input value={in2} onChange={(e)=>setIn2(e.target.value)}/></td>
-                    <td><select> 
-                            <option value='{"num_sequence":[0,1,2,3]}'>Option one</option>
-                            <option value='{"foo":"bar","one":"two"}'>Option two</option>
+                    <td><select onChange={(e)=>setSelect(e.target.value)}> 
+                            {albums.map((i,index)=>{
+                                
+                                return <option value={i.id} key={index}>{i.title} </option>
+                            })}
                         </select></td>
                     <td></td>
-                    <td><button className='add' onClick={()=>addItem(in1,in2,in3)}>Add</button></td>
-                    <td><button className='add' onClick={()=>setAdd(false)}>Cancel</button></td>
+                    <td><button className='add' onClick={()=>addItem(in1,in2,select).then(res=>method().then(res=>setArray(res.data[lable])))}>Add</button></td>
+                    
                 </tr>
             }
             return <tr><td><button className='add' onClick={()=>setAdd(true)}>Add New</button></td></tr>
         }
     }
-    
+    function setVisibleEdit(){
+        if(lable === "users"){
+            return
+        }
+        else{
+            if(edit){
+                return <tr><td><button className='add' onClick={()=>setEdit(false)}>Cancel</button></td></tr>
+            }
+            return <tr><td><button className='add' onClick={()=>setEdit(true)}>Edit</button></td></tr>
+        }
+        
+    }
+    function setEditofArray(){
+        
+        return array.map((i, index)=>{
+
+            if(edit){
+                return <tr className="tableItem" key={index}>
+                <td>{i.id}</td>
+                <td><input onChange={(e)=>setIn1(e.target.value)} defaultValue={i.title}/></td>
+                <td><input onChange={(e)=>setIn2(e.target.value)} defaultValue={i.url}/></td>
+                <td><select onChange={e=>setSelect(e.target.value)}> 
+                            {albums.map((i,index)=>{
+                                return <option value={i.id} key={index}>{i.title}</option>
+                            })}
+                        </select></td>
+                <td>{i.updatedAt}</td>
+                
+                <td>
+                    <button onClick={()=>deleteMethod(index,i.id)}>Delete</button>
+                    <button onClick={()=>editMethod(i.id, array[index].title, array[index].url)}>Edit</button>
+                </td>
+                
+            </tr>
+            }
+            return  <tr className="tableItem" key={index}>
+            <td>{i.id}</td>
+            <td>{i.name || i.title}</td>
+            <td>{i.email || i.url}</td>
+            <td>{i.createdAt}</td>
+            <td>{i.updatedAt}</td>
+            
+            <td><button onClick={()=>deleteMethod(index,i.id)}>Delete</button></td>
+            
+        </tr>
+        })
+    }
 
     return(
         <>
@@ -56,11 +156,10 @@ const DashUsers = ({lable,array,titles,addItem}) =>{
                     </tr>
                 </thead>
                 <tbody>
-                    {setVisible()}
-                    {array.map((i, index)=>{
-                        
-                        return  <DashContent {...i} key={index} delete={()=>deleteUser(index)} index={index}/>
-                    })}
+                    {setVisibleEdit()}
+                    {setVisibleAdd()}
+                    {/* //render */}
+                    {setEditofArray()}
                     <Outlet/>
                 </tbody>
             </table>

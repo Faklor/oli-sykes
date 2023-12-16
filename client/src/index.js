@@ -9,6 +9,8 @@ import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
 import { persistStore } from 'redux-persist'
 //============components=====================
+import PrivateRoute from './privateRoute'
+import PrivateDash from './privateDash'
 import Home from './home/home'
 import Music from './music/music'
 import Blog from './blog/blog'
@@ -22,14 +24,16 @@ import Dashboard from './user/dashboard'
 import Dash from './user/components/dash'
 import DashGraph from './user/components/dashGraph'
 import hocDash from './user/hoc/hocDash'
-import DashContent from './user/components/dashContent';
 
 import {
   users,
-  songAll
+  songAll,
+  albums
 } from './components/axiosRouterGet'
 import {
-  addSong
+  addSong,
+  deleteSong,
+  editSong
 } from './components/axiosRouterPost'
 //============components=====================
 import {
@@ -46,8 +50,9 @@ const SignUp = hoc(['Register','SignUp', 'Sign In', 'signIn','registration'])(Si
 const Users = hocDash({lable:'users',method:users, 
 titles:['id','login','email','created','lastEdit','delete']})(Dash)
 const Songs = hocDash({lable:'songs',method:songAll,
-titles:['id','title','url','album','created','edit','delete'],addItem:addSong})(Dash)
-
+titles:['id','title','url','album','created','delete'],addItem:addSong, deleteItemMethod:deleteSong, editItem:editSong})(Dash)
+const Albums = hocDash({lable:'albums',method:albums, 
+titles:['id','title','url','created','lastEdit','delete']})(Dash)
 
 
 const router = createBrowserRouter([
@@ -64,16 +69,18 @@ const router = createBrowserRouter([
   //---------------------User-------------------------------
   { path: "/User", element:<User/>,
     children:[
-      { path: ':userName', element:<Cabinet/> },
+      { path: ':userName', element:<PrivateRoute component={<Cabinet/>}/> },
       { path: 'signIn', element:<SignIn status={['Login','SignIn', 'Create Account', 'signUp','login']}/>},
       { path: 'signUp', element:<SignUp/> },
-      { path: 'dashboard', element:<Dashboard/>, children:[
+      { path: 'dashboard', element:<PrivateDash component={<Dashboard/>}/>, children:[
         {path: 'graph', element:<DashGraph/>},
         {path: 'users', element:<Users/>, children:[
-          { path:':item',  element:<DashContent/> }
+          { path:':item',  element:<Dash/> }
         ]},
         {path: 'music', element:<Songs/>},
         {path: 'blogs', element:<Users/>},
+        {path: 'albums', element:<Albums/>},
+        {path: ':userName', element:<Cabinet/>},
       ]}
     ]
   },

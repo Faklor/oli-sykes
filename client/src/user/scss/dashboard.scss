@@ -17,9 +17,12 @@
 
         thead{
             font-size: 40px;
+            display: block;
+            th{width: 10%;}
         }
         tbody{
-            
+            display: block;
+            overflow-y: scroll;
             
             font-size: 18px;
             .add{
@@ -40,8 +43,18 @@
                     border:none;
                     border-radius: 5px;
                     color: #fff;
+                    cursor: pointer;
+                    transition: 0.5s;
+                    &:hover{
+                        background-color: #fff;
+                        color: #5771AD;
+                        
+                    }
                 }
+                td{width: 20%;}
             }
         }   
     }
+    text-align: center;
 }
+

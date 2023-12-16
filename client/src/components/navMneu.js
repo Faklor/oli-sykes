@@ -78,8 +78,10 @@ const NavMenu = props =>{
             }
         })
         
+
+        //image
     }
-    
+
     //------------------------------------------------------------------------
     //===================================================
     useEffect(()=>{
@@ -118,11 +120,18 @@ const NavMenu = props =>{
         
         if(selector[0] !== selector[index]){
             if(selector[0].name !== "Home" && selector[0].name !== "Music" && selector[0].name !== "Blog"){
-                if(selectorUser !== null){
+                if(selectorUser !== null && selectorUser.role === "USER"){
+                    
                     return navigate ('../User/'+selectorUser.name)
                 }
+                else if(selectorUser !== null && selectorUser.role === "ADMIN"){
+                    return navigate ('../User/dashboard/graph')
+                }
+                else{
+                    return navigate('../User/signIn')
+                }
                 
-                return navigate('../User/signIn')
+                
             }
             //selector[0].name === "User" || copyDefaulList[3].name != selectorUser.name)
            

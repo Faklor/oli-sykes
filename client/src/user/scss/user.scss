@@ -14,6 +14,21 @@ $variable:500px;
     font-family: "Electrolize";
 
     
-
+    button{
+        align-self: center;
+        justify-self: center;
+        width: 10em;
+        padding: 1em;
+        border-radius: 10px;
+        transition: 0.5s;
+        border: none;
+        background-color: #5771AD;
+        color:#fff;
+        cursor: pointer;
+        &:hover{
+            background-color: #fff;
+            color: #5771AD;
+        }
+    }
     
 }

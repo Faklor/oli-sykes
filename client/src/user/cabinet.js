@@ -5,11 +5,8 @@ import {
     selectUser,  
     setStateUser
 } from '../store/nowUser'
-import {
-    setStateEdit
-} from '../store/editAccount'
 //===============navigate================================
-import { useNavigate, useParams } from 'react-router-dom'
+import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { useEffect } from 'react'
 //==============componet=================================
 import Content from './content'
@@ -20,6 +17,7 @@ export default function Cabinet(){
     const dispatch = useDispatch()
     //================navigate========================
     const navigate = useNavigate()
+    const location = useLocation()
     let { userName } = useParams()
     //==================state=========================
     //================================================ 
@@ -36,9 +34,19 @@ export default function Cabinet(){
     },[navigate, selectorUser])
     
     //================function========================
-    function outAccount(){
+    function outAccount(){ 
+        if(selectorUser.role === "ADMIN"){
+            const loc = '/User/'+location.pathname.match(/\/\w+$/)[0].replace('/','')
+            if(location.pathname === loc){
+                dispatch(setStateUser(null))
+                return navigate('../signIn')
+            }
+            dispatch(setStateUser(null))
+            return navigate('../../signIn')
+        }
         dispatch(setStateUser(null))
         return navigate('../signIn')
+        
     }
     
     //===============render-function==================
@@ -53,7 +61,7 @@ export default function Cabinet(){
     return(
         <>
             {render()}
-            <button onClick={outAccount}>Log out</button>
+            <button className='logOut' onClick={outAccount}>Log out</button>
         </>
     )
 } 
