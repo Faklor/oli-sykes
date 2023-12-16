@@ -1,5 +1,6 @@
-import { Sequelize } from "sequelize";
-import { Albums, Song_likes, Songs } from "../models/models.js";
+import pkg, { Sequelize } from 'sequelize'
+import { Albums, Song_comments, Song_likes, Songs, Users } from "../models/models.js";
+const Op = pkg
 
 class Album {
   async get(req, res) {
@@ -7,16 +8,37 @@ class Album {
       // Songs of a specific album
       if (req.params.id) {
         await Songs.findAll({
-            attributes: {include: [[Sequelize.fn('COUNT', Sequelize.col('songId')), "like"]]},
-            where: {albumId: req.params.id},
-            include: [{
+          
+          where: {albumId: req.params.id},
+          include: [
+            {
               model: Song_likes,
-              attributes: []
-            }],
-            raw: true,
-            group: ["Songs.id"],
+              where: {
+                songId: [Op.col("id")]
+              }
+            },
+            {
+              model: Song_comments,
+              attributes: ["comment"],
+              include: [{
+                model: Users, 
+                attributes: {
+                  exclude: ['createdAt', 'updatedAt', 'password']
+                }
+              }]
+            }
+          ],
+        })
+          .then((songs) => {
+            songs.forEach((res, id) => {
+              Object.keys(res.dataValues).forEach(item => {
+                if (item == "song_likes") {
+                  songs[id].dataValues[item] = songs[id].dataValues[item].length
+                } 
+              })
+            })
+            res.json({songs})
           })
-          .then((songs) => res.json({songs}))
           .catch((e) => res.json({error: e.message}))
         return
       }
