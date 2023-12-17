@@ -4,6 +4,7 @@ import fs from 'fs'
 import path from "path"
 import {validationResult} from 'express-validator'
 import { Users } from "../models/models.js";
+import format from "../middleware/dateFormat.js";
 const {Op} = pkg;
 
 class Auth {
@@ -112,17 +113,8 @@ class Auth {
     try {
 
       const users = await Users.findAll({attributes: {exclude: ["password"]}})
-      users.forEach((res, id) => {
-        Object.keys(res.dataValues).forEach(item => {
-          if (item == "createdAt" || item == "updatedAt") {
-            users[id].dataValues[item] = new Date(res[item]).toISOString().replace(/T/, ' ').replace(/\..+/, '');
-          } 
-        })
-      })
-
-      res.json({
-        users
-      });
+      format(users)
+      res.json({users});
       
     } catch (e) {
       res.json(e.message);
