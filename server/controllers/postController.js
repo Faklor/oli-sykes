@@ -1,3 +1,4 @@
+import format from "../middleware/dateFormat.js";
 import { Post_comments, Post_likes, Posts, Users } from "../models/models.js";
 
 class Post {
@@ -19,19 +20,14 @@ class Post {
         ],
       })
         .then((posts) => {
+          format(posts)
           posts.map((res) => {
             Object.keys(res.dataValues).forEach(item => {
               if (item == "post_likes") {
                 res.dataValues[item] = res.dataValues[item].length
               }
               if (item == "post_comments") {
-                res.dataValues[item].map(i => {
-                  Object.keys(i.dataValues).forEach(attr => {
-                    if (attr == "createdAt") {
-                      i.dataValues[attr] = new Date(i[attr]).toISOString().replace(/T/, ' ').replace(/\..+/, '');
-                    }  
-                  })
-                })
+                format(res.dataValues[item])
               }
             })
           })

@@ -1,6 +1,5 @@
-import pkg from 'sequelize'
 import { Albums, Song_comments, Song_likes, Songs, Users } from "../models/models.js";
-const Op = pkg
+import format from "../middleware/dateFormat.js";
 
 class Album {
   async get(req, res) {
@@ -25,19 +24,14 @@ class Album {
           ],
         })
           .then((songs) => {
+            format(songs)
             songs.map((res) => {
               Object.keys(res.dataValues).forEach(item => {
                 if (item == "song_likes") {
                   res.dataValues[item] = res.dataValues[item].length
                 }
                 if (item == "song_comments") {
-                  res.dataValues[item].map(i => {
-                    Object.keys(i.dataValues).forEach(attr => {
-                      if (attr == "createdAt") {
-                        i.dataValues[attr] = new Date(i[attr]).toISOString().replace(/T/, ' ').replace(/\..+/, '');
-                      }  
-                    })
-                  })
+                  format(res.dataValues[item])
                 }
               })
             })
@@ -52,18 +46,8 @@ class Album {
           ['title', 'ASC'],
         ], 
       })
-      // Send Albums WITH SONGS
-      const songs = await Albums.findAll(
-        {
-          order: [
-            ['title', 'ASC'],
-          ],
-          include: [
-            {model: Songs, attributes: ["title", "id", "url"]}
-          ],
-        })
     
-      res.json({ albums: albums, songs: songs });
+      res.json({ albums: albums });
       
     } catch (e) {
       res.json(e.message);

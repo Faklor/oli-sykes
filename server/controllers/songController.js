@@ -1,6 +1,4 @@
 import { Songs, Song_comments, Song_likes } from "../models/models.js";
-import pkg from 'sequelize';
-const {Op} = pkg
 
 class Song {
   async get(req, res) {
