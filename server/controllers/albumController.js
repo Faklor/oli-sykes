@@ -34,7 +34,7 @@ class Album {
                   res.dataValues[item].map(i => {
                     Object.keys(i.dataValues).forEach(attr => {
                       if (attr == "createdAt") {
-                        i.dataValues[attr] = new Date(i[attr]).toISOString().slice(0, 10);
+                        i.dataValues[attr] = new Date(i[attr]).toISOString().replace(/T/, ' ').replace(/\..+/, '');
                       }  
                     })
                   })

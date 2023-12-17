@@ -3,28 +3,43 @@ import { Post_comments, Post_likes, Posts, Users } from "../models/models.js";
 class Post {
   async get(req, res) {
     try {
-      const posts = await Posts.findAll({
-        order: [
-          ['title', 'ASC'],
-        ], 
+      await Posts.findAll({
+        include: [
+          { model: Post_likes },
+          {
+            model: Post_comments,
+            attributes: ["comment", "createdAt"],
+            include: [{
+              model: Users, 
+              attributes: {
+                exclude: ['updatedAt', 'password']
+              }
+            }]
+          }
+        ],
       })
-      const postsWithDetails = await Posts.findAll(
-        {
-          order: [
-            ['title', 'ASC'],
-          ],
-          include: [
-            {
-              model: Post_comments, 
-              attributes: ["comment"],
-              include: [Users]
-            }
-          ],
+        .then((posts) => {
+          posts.map((res) => {
+            Object.keys(res.dataValues).forEach(item => {
+              if (item == "post_likes") {
+                res.dataValues[item] = res.dataValues[item].length
+              }
+              if (item == "post_comments") {
+                res.dataValues[item].map(i => {
+                  Object.keys(i.dataValues).forEach(attr => {
+                    if (attr == "createdAt") {
+                      i.dataValues[attr] = new Date(i[attr]).toISOString().replace(/T/, ' ').replace(/\..+/, '');
+                    }  
+                  })
+                })
+              }
+            })
+          })
+          res.json({posts})
         })
-    
-      res.json({
-        data: { posts, postsWithDetails},
-      });
+        .catch((e) => res.json({error: e.message}))
+      return
+
     } catch (e) {
       res.json(e.message);
     }
