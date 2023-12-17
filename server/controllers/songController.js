@@ -1,4 +1,6 @@
-import { Songs, Albums, Song_comments, Song_likes } from "../models/models.js";
+import { Songs, Song_comments, Song_likes } from "../models/models.js";
+import pkg from 'sequelize';
+const {Op} = pkg
 
 class Song {
   async get(req, res) {
@@ -69,10 +71,17 @@ class Song {
     try {
 
       const {userId, songId} = req.body
-      await Song_likes.create({userId, songId})
-        .then(() => res.json({created: true}))
-        .catch((e) => res.json({error: e.message}))
-        
+      const [likes, created] = await Song_likes.findOrCreate({ 
+        where: { userId, songId }})
+      console.log(likes)
+      console.log(created)
+      if(created) {
+        res.json({created: true})
+        return
+      }
+      if (likes)
+        res.json({created: false, message: "User already liked that song"}) 
+
     } catch (e) {
       res.json(e.message);
     }
