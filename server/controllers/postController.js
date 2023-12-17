@@ -84,9 +84,14 @@ class Post {
     try {
     
       const {userId, postId} = req.body
-      await Post_likes.create({userId, postId})
-        .then(() => res.json({created: true}))
-        .catch((e) => res.json({error: e.message}))
+      const [likes, created] = await Post_likes.findOrCreate({ 
+        where: { userId, postId }})
+      if(created) {
+        res.json({created: true})
+        return
+      }
+      if (likes)
+        res.json({created: false, message: "User already liked that post"})
 
     } catch (e) {
       res.json(e.message);

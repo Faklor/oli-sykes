@@ -73,8 +73,6 @@ class Song {
       const {userId, songId} = req.body
       const [likes, created] = await Song_likes.findOrCreate({ 
         where: { userId, songId }})
-      console.log(likes)
-      console.log(created)
       if(created) {
         res.json({created: true})
         return
