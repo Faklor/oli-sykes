@@ -1,30 +1,41 @@
+import format from "../middleware/dateFormat.js";
 import { Post_comments, Post_likes, Posts, Users } from "../models/models.js";
 
 class Post {
   async get(req, res) {
     try {
-      const posts = await Posts.findAll({
-        order: [
-          ['title', 'ASC'],
-        ], 
+      await Posts.findAll({
+        include: [
+          { model: Post_likes },
+          {
+            model: Post_comments,
+            attributes: ["comment", "createdAt"],
+            include: [{
+              model: Users, 
+              attributes: {
+                exclude: ['updatedAt', 'password']
+              }
+            }]
+          }
+        ],
       })
-      const postsWithDetails = await Posts.findAll(
-        {
-          order: [
-            ['title', 'ASC'],
-          ],
-          include: [
-            {
-              model: Post_comments, 
-              attributes: ["comment"],
-              include: [Users]
-            }
-          ],
+        .then((posts) => {
+          format(posts)
+          posts.map((res) => {
+            Object.keys(res.dataValues).forEach(item => {
+              if (item == "post_likes") {
+                res.dataValues[item] = res.dataValues[item].length
+              }
+              if (item == "post_comments") {
+                format(res.dataValues[item])
+              }
+            })
+          })
+          res.json({posts})
         })
-    
-      res.json({
-        data: { posts, postsWithDetails},
-      });
+        .catch((e) => res.json({error: e.message}))
+      return
+
     } catch (e) {
       res.json(e.message);
     }
@@ -47,9 +58,7 @@ class Post {
     try {
 
       const {id} = req.body
-      id.map(async(res) => (
-        await Posts.destroy({where: {id}})
-      ))
+      await Posts.destroy({where: {id}})
       res.json({deleted: true})
 
     } catch (e) {
@@ -86,9 +95,14 @@ class Post {
     try {
     
       const {userId, postId} = req.body
-      await Post_likes.create({userId, postId})
-        .then(() => res.json({created: true}))
-        .catch((e) => res.json({error: e.message}))
+      const [likes, created] = await Post_likes.findOrCreate({ 
+        where: { userId, postId }})
+      if(created) {
+        res.json({created: true})
+        return
+      }
+      if (likes)
+        res.json({created: false, message: "User already liked that post"})
 
     } catch (e) {
       res.json(e.message);

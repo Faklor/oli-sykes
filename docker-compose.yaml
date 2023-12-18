@@ -54,6 +54,8 @@ services:
       context: ./client
       dockerfile: ./Dockerfile
     container_name: client
+    environment:
+      SERVER_HOST: http://server:5000
     networks:
       - net
     ports:
