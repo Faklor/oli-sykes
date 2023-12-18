@@ -5,7 +5,7 @@ const Song =(props)=>{
     return(
         <div className="song">
             <h1>{props.array}</h1>
-            <img src={play} alt='somgImg' onClick={()=>props.play(props.url)}>
+            <img src={play} alt='somgImg' onClick={()=>props.play(props.url, props.id)}>
                 
             </img>
             <div className='name'>

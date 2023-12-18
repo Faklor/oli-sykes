@@ -22,5 +22,15 @@
         //align-self: center;
         justify-self: end;
     }
+    .video{
+        .like{
+
+            svg{
+                width: 5em;
+                height: 5em;
+                cursor: pointer;
+            }
+        }
+    }
     
 } 

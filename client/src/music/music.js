@@ -2,6 +2,7 @@ import Header from "../components/header"
 import Slyder from './slyder'
 import Song from './song'
 import Video from './components/video'
+import Like from './components/like'
 
 import './music.scss'
 //-----------------axios------------------------
@@ -19,6 +20,7 @@ const Songs= props=>{
     const [arrayAlbums, setArrayAlbums] = useState([])
     //--------------video---------------------------
     const [video, setVideo] = useState('http://www.youtube.com/embed/UNaYpBpRJOY?si=YqDdXzD_4ARsFoYk')
+    const [idSong, setIdSong] = useState('')
     
 
     useEffect(()=>{
@@ -26,6 +28,8 @@ const Songs= props=>{
         .then(res=>{
             setArraySongs(res.data.songs)
             setVideo('http://www.youtube.com/embed/'+res.data.songs[0].url)
+            setIdSong(res.data.songs[0].id)
+            
             
         })
         .catch(e=>{
@@ -40,8 +44,9 @@ const Songs= props=>{
 
         })
     }, [])
-    function play(url){
+    function play(url, id){
         setVideo('http://www.youtube.com/embed/'+url)
+        setIdSong(id)
     }
     
     
@@ -65,7 +70,10 @@ const Songs= props=>{
                 <div className="songs">
                     {songs}
                 </div>
-                <Video url={video}/>
+                <div className="video">
+                    <Video url={video}/>
+                    <Like idSong={idSong}/>
+                </div>
                
             </main>
         </>
