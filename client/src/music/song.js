@@ -1,21 +1,18 @@
 import './song.scss'
-import Button from './button'
+import play from '../res/play.png'
 
-const Song =props=>{
-   
+const Song =(props)=>{
     return(
         <div className="song">
-            <h1>{props.id}</h1>
-            <img src={props.img} alt='somgImg'>
+            <h1>{props.array}</h1>
+            <img src={play} alt='somgImg' onClick={()=>props.play(props.url)}>
                 
             </img>
-            <Button/>
             <div className='name'>
-                <h2>{props.name}</h2>
+                <h2>{props.title}</h2>
                 <h3>Bring me the horizon</h3>
             </div>
             
-            <h4>{props.time}</h4>
            
         </div>
         
