@@ -69,9 +69,11 @@ class Post {
   async update(req, res) {
     try {
     
-      res.json({
-        data: { },
-      });
+      const { id, title, url, img } = req.body
+
+      await Posts.update({title, url, img}, {where:{id}})
+        .then(() => res.json({updated: true}))
+        .catch((e) => res.json({error: e.message}))
 
     } catch (e) {
       res.json(e.message);
