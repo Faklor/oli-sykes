@@ -8,6 +8,7 @@ import user from '../../res/user.svg'
 //import axios from "axios"
 import { useEffect, useState } from "react"
 import { setLike } from "../../components/animate"
+import { useNavigate } from "react-router-dom";
 
 
 export default function Like({idSong,likes,comment,sendComment}){
@@ -15,12 +16,15 @@ export default function Like({idSong,likes,comment,sendComment}){
     const selectorUser = useSelector(selectUser)
     //===================state===========================
     const [text, setText] = useState('')
+    //===================navigate========================
+    const navigate  = useNavigate()
 
     useEffect(()=>{
         if(selectorUser !== null){
             getLikeVisible(selectorUser.id, idSong)
             .then(res=>{
-                if(res.data.like){
+                //console.log(res.data.like)
+                if(res.data.like === true){
                     setLike()
                 }
             })
@@ -37,6 +41,9 @@ export default function Like({idSong,likes,comment,sendComment}){
                 setLike()
             })
         }
+        else{
+            return navigate('../User/signIn')
+        }
     }
 
     return(
@@ -48,6 +55,7 @@ export default function Like({idSong,likes,comment,sendComment}){
             <button onClick={()=>sendComment(idSong, text)}>send Comment</button>
             
         </div>
+        <div className="allComments">
         {comment.map((i,index)=>{
             return <div className="comment" key={index}>
                 <div className="userCommnet">
@@ -57,6 +65,7 @@ export default function Like({idSong,likes,comment,sendComment}){
                 <textarea disabled defaultValue={i.comment}></textarea>
             </div>
         })}
+        </div>
         </>
     )
 }

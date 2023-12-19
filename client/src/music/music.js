@@ -16,7 +16,7 @@ import {
     oneAlbum,
  } from '../components/axiosRouterGet' 
 import { useEffect, useState, memo } from "react"
-import { Outlet, useParams } from "react-router-dom"
+import { Outlet, useNavigate, useParams } from "react-router-dom"
 
 //import axios from 'axios'
 
@@ -30,7 +30,7 @@ const Songs= props=>{
     const [video, setVideo] = useState('http://www.youtube.com/embed/UNaYpBpRJOY?si=YqDdXzD_4ARsFoYk')
     const [idSong, setIdSong] = useState('')
     //==============navigate========================
-    
+    const navigate = useNavigate()
     const {albumsName} = useParams()
     //================redux=========================
     const selectorUser  = useSelector(selectUser)
@@ -113,6 +113,9 @@ const Songs= props=>{
             })
             
             
+        }
+        else{
+            return navigate('../User/signIn')
         }
         
     }

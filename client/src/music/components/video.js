@@ -7,7 +7,8 @@ export default function Video(props){
         type="text/html" 
         width="640" 
         height="360"
-        src={props.url} 
-        frameBorder="0"/>
+        src={props.url}
+        title="frameVideo" 
+        frameBorder={0}/>
     )
 }

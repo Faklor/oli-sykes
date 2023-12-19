@@ -15,9 +15,9 @@
     .songs{
         //overflow: hidden;
         
-       // overflow-y: scroll;
+        overflow-y: scroll;
         width: 360px;
-        height: 33em;
+        height: 58em;
 
         //align-self: center;
         justify-self: end;
@@ -69,10 +69,18 @@
 
         }
     }
+    .allComments{
+        height: 30em;
+        overflow: hidden;
+        overflow-y: scroll;
+        width: 40em;
+        margin-bottom: 3em;
+    }
     .comment{
         display: flex;
         margin:1em;
         color:#929292;
+        
         img{
             width: 3em;
             height: 3em;
