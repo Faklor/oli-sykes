@@ -100,6 +100,13 @@ const deleteItem = index=>{
         },
     })
 }
+//=========================Like=======================
+const setLike = ()=>{
+    anime({
+        targets:'.likePath',
+        fill:'#EE88A3',
+    })
+}
 export {
     animateBarCheck,
     animateBarUnCheck,
@@ -107,6 +114,8 @@ export {
     loginOpacity1,
     //-------------------
     dashContent,
-    deleteItem
+    deleteItem,
+    //-------------------
+    setLike,
 }
 //===================================================

@@ -8,13 +8,17 @@ const songAll =async () => await axios.get('http://localhost:5000/api/song/get')
 const users =async () => await axios.get('http://localhost:5000/api/users')
 //--------------------------albums-----------------------------
 const albums =async () => await axios.get('http://localhost:5000/api/album/get')
-//---------------------------like------------------------------
-const getLikeVisible =async (userId,songId) =>await axios.get('http://localhost:5000/api/song/getlike',{userId:userId,songId:songId})
-
+//--------------------------getOneAlbum------------------------
+const oneAlbum =async (id) => await axios.get('http://localhost:5000/api/album/get/'+id)
+//---------------------------Blogs-----------------------------
+const blogs =async () => await axios.get('http://localhost:5000/api/post/get')
 //==================export=====================================
 export {
-    songAll,
     users,
+    //song---------
+    songAll,
     albums,
-    getLikeVisible
+    oneAlbum,
+    //post---------
+    blogs
 } 

@@ -34,7 +34,7 @@ const listen = async () => {
 
     await sequelize.authenticate();
     await sequelize.sync();
-    // await sequelize.sync({force: true});
+    //await sequelize.sync({force: true});
     app.listen(PORT || 5000, () => {
       console.log(`http://localhost:${PORT}`);
     });

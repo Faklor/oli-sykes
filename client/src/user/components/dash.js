@@ -13,6 +13,7 @@ const DashUsers = ({lable,method,titles,addItem,deleteItemMethod, albums,editIte
     //--------------input---------------------------------
     const [in1, setIn1] = useState("")
     const [in2, setIn2] = useState("")
+    const [textAr, setTextAr] = useState("")
     const [select, setSelect] = useState()
    
     //==============navigate==============================
@@ -83,14 +84,23 @@ const DashUsers = ({lable,method,titles,addItem,deleteItemMethod, albums,editIte
                     <td><button className='add' onClick={()=>setAdd(false)}>Cancel</button></td>
                     <td><input value={in1} onChange={(e)=>setIn1(e.target.value)}/></td>
                     <td><input value={in2} onChange={(e)=>setIn2(e.target.value)}/></td>
-                    <td><select onChange={(e)=>setSelect(e.target.value)}> 
+                    <td>{lable==="songs" &&<select onChange={(e)=>setSelect(e.target.value)}> 
                             {albums.map((i,index)=>{
-                                
+                              
                                 return <option value={i.id} key={index}>{i.title} </option>
+                                
+                                                               
                             })}
-                        </select></td>
+                        </select>}
+                        {lable ==="posts"&&
+                        <textarea value={textAr} onChange={(e)=>setTextAr(e.target.value)}/>}
+                    </td>
                     <td></td>
-                    <td><button className='add' onClick={()=>addItem(in1,in2,select).then(res=>method().then(res=>setArray(res.data[lable])))}>Add</button></td>
+                    <td><button className='add' onClick={()=>{
+                        if(lable ==="posts"){
+                            addItem(in1,textAr,in2).then(res=>method().then(res=>setArray(res.data[lable])))
+                        }
+                        else{addItem(in1,in2,select).then(res=>method().then(res=>setArray(res.data[lable])))}}}>Add</button></td>
                     
                 </tr>
             }
@@ -118,16 +128,25 @@ const DashUsers = ({lable,method,titles,addItem,deleteItemMethod, albums,editIte
                 <td>{i.id}</td>
                 <td><input onChange={(e)=>setIn1(e.target.value)} defaultValue={i.title}/></td>
                 <td><input onChange={(e)=>setIn2(e.target.value)} defaultValue={i.url}/></td>
-                <td><select onChange={e=>setSelect(e.target.value)}> 
+                <td>{lable==="songs" &&<select onChange={e=>setSelect(e.target.value)}> 
                             {albums.map((i,index)=>{
                                 return <option value={i.id} key={index}>{i.title}</option>
                             })}
-                        </select></td>
+                        </select>}
+                    {lable!=="songs"&&i.createdAt}
+                    {lable==="posts"&&
+                    <textarea defaultValue={i.description} onChange={(e)=>setTextAr(e.target.value)}/>}
+                    
+                </td>
                 <td>{i.updatedAt}</td>
                 
                 <td>
                     <button onClick={()=>deleteMethod(index,i.id)}>Delete</button>
-                    <button onClick={()=>editMethod(i.id, array[index].title, array[index].url)}>Edit</button>
+                    <button onClick={()=>{
+                        if(lable ==="posts"){
+                            editMethod(i.id, array[index].title,array[index].description, array[index].url)
+                        }
+                        else{editMethod(i.id, array[index].title, array[index].url)}}}>Edit</button>
                 </td>
                 
             </tr>
@@ -135,7 +154,7 @@ const DashUsers = ({lable,method,titles,addItem,deleteItemMethod, albums,editIte
             return  <tr className="tableItem" key={index}>
             <td>{i.id}</td>
             <td>{i.name || i.title}</td>
-            <td>{i.email || i.url}</td>
+            <td>{i.email || i.url || i.img}</td>
             <td>{i.createdAt}</td>
             <td>{i.updatedAt}</td>
             

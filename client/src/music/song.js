@@ -10,7 +10,7 @@ const Song =(props)=>{
             </img>
             <div className='name'>
                 <h2>{props.title}</h2>
-                <h3>Bring me the horizon</h3>
+                <h3>Bring me the horizon</h3> 
             </div>
             
            
