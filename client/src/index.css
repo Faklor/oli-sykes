@@ -8,6 +8,7 @@ body {
 
   scrollbar-width: thin;          /* "auto" or "thin" */
   scrollbar-color: #5771AD; 
+  background-color: #1C1E30;
 }
 
 code {

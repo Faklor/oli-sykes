@@ -1,12 +1,12 @@
 .music{
     
-    position: fixed;
+    //position: fixed;
     width: 100%;
     height: 100%;
     z-index: 0;
     //background-color: #2F343E;
     background-color: #1C1E30;
-    overflow: hidden;
+    //overflow-y: scroll;
 
     display: grid;
     grid-template-columns: 1fr 57%; 
@@ -15,7 +15,7 @@
     .songs{
         //overflow: hidden;
         
-        overflow-y: scroll;
+       // overflow-y: scroll;
         width: 360px;
         height: 33em;
 
@@ -23,13 +23,84 @@
         justify-self: end;
     }
     .video{
+        frame{
+           
+
+        }
         .like{
+            display: flex;
+            gap:1em;
+            h1{
+                color:#fff; 
+            }
 
             svg{
                 width: 5em;
                 height: 5em;
                 cursor: pointer;
                 
+            }
+        }
+        input{
+            background-color: #28293D;
+            border:none;
+            
+            height: 3em;
+            border-radius: 20px;
+            margin-top: 1.5em;
+            outline: none;
+            padding: 0 1em 0 1em;
+            color:#929292;
+        }
+        button{
+            background-color: #37476C;
+            color:#fff;
+            border:none;
+            height: 3em;
+            padding: 1em 2em;
+            border-radius: 20px;
+            cursor: pointer;
+            margin-top: 1.5em;
+            transition: 0.5s;
+            &:hover{
+                color:#37476C;
+                background-color: #fff;
+            }
+
+        }
+    }
+    .comment{
+        display: flex;
+        margin:1em;
+        color:#929292;
+        img{
+            width: 3em;
+            height: 3em;
+            object-fit: cover;
+            border-radius: 100%;
+        }
+        textarea{
+            margin:0;
+            margin-left: 0.3em;
+            margin-top: 0.5em;
+            height: 1.5em;
+            font-size: 24px;
+            background-color: transparent;
+            border:none;
+        }
+
+        .userCommnet{
+            display: flex;
+            background-color: #37476C;
+            height: 3em;
+            padding: 1em;
+            border-radius: 20px;
+            color:#fff;
+            
+            h2{
+                margin:0;
+                margin-left: 0.3em;
+                margin-top: 0.35em; 
             }
         }
     }

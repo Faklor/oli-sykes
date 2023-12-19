@@ -23,6 +23,8 @@ const editSong =async (id, title, url, albumId) => await axios.post('http://loca
 const addLike =async (userId,songId)=> await axios.post('http://localhost:5000/api/song/like',{userId:userId, songId:songId})
 //---------------------------like------------------------------
 const getLikeVisible =async (userId,songId) => await axios.post('http://localhost:5000/api/song/getlike',{userId:userId,songId:songId})
+//---------------------------commnet---------------------------
+const addComment=async (comment,userId, songId)  => await axios.post('http://localhost:5000/api/song/comment',{comment:comment,userId:userId,songId:songId})
 
 //album
 //------------------------addAlbum-----------------------------
@@ -58,5 +60,6 @@ export {
     //post
     addPost,
     updatePost,
-    deletePost
+    deletePost,
+    addComment
 } 

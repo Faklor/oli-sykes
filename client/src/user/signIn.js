@@ -40,9 +40,12 @@ function SignIn(props){
         loginOpacity1()
         if(selectorUser !== null){
             if(selectorUser.role === "ADMIN"){
-                return navigate('../User/dashboard/graph')
+                return navigate('../dashboard/graph')
             }
-            return navigate('../User/')
+            else{
+                return navigate('../User/')
+            }
+            
         }
          
 
