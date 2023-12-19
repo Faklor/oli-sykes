@@ -129,6 +129,15 @@ class Song {
       res.json(e.message);
     } 
   }
+
+  async unlike(req, res) {
+
+    const {userId, songId} = req.body
+    await Song_likes.destroy({where: {userId, songId}})
+      .then(() => res.json({deleted: true}))
+      .catch((e) => res.json({error: e.message}))
+    
+  }
 }
 
 export default new Song();
