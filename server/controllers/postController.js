@@ -110,6 +110,15 @@ class Post {
       res.json(e.message);
     }
   }
+
+  async unlike(req, res) {
+
+    const {userId, postId} = req.body
+    await Post_likes.destroy({where: {userId, postId}})
+      .then(() => res.json({deleted: true}))
+      .catch((e) => res.json({error: e.message}))
+    
+  }
 }
 
 export default new Post();

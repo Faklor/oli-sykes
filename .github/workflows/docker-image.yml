@@ -7,16 +7,12 @@ on:
     branches: [ "master" ]
 
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v3
-    - name: Build the Client image
-      run: docker build ./client --file ./client/Dockerfile --tag client:$(date +%s)
-    - name: Login regestry
-      run: docker login docker.pkg.github.com -u ${{ github.actor }} -p $pass
-    - name: Push image
-      run: docker push client:$(date +%s)
+      - uses: actions/checkout@v3
+      - name: Build the Client image
+        run: |
+          docker login --username faklor --password ${{ secrets.GIT_TOKEN }} ghcr.io
+          docker build ./client --file ./client/Dockerfile --tag ghcr.io/faklor/oli-sykes:latest
+          docker push ghcr.io/faklor/oli-sykes:latest
