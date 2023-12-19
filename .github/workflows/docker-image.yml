@@ -15,4 +15,4 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build the Client image
-      run: docker build ./client --file Dockerfile --tag client:$(date +%s)
+      run: docker build ./client --file ./Dockerfile --tag client:$(date +%s)
