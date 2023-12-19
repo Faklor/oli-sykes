@@ -13,7 +13,6 @@ jobs:
       - uses: actions/checkout@v3
       - name: Build the Client image
         run: |
-          docker login --username ${{ github.actor }} --password ${{ secrets.GIT_TOKEN }} ghcr.io
+          docker login --username faklor --password ${{ secrets.GIT_TOKEN }} ghcr.io
           docker build ./client --file ./client/Dockerfile --tag ghcr.io/faklor/oli-sykes:latest
-          docker run ghcr.io/faklor/oli-sykes:latest
           docker push ghcr.io/faklor/oli-sykes:latest
