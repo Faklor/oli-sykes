@@ -1,12 +1,41 @@
-import { Songs, Song_comments, Song_likes } from "../models/models.js";
+import { Songs, Song_comments, Song_likes, Users } from "../models/models.js";
+import format from "../middleware/dateFormat.js";
 
 class Song {
   async get(req, res) {
     try {
-      const songs = await Songs.findAll({})
-      res.json({
-        songs
-      });
+
+      await Songs.findAll({
+
+        include: [
+          { model: Song_likes },
+          {
+            model: Song_comments,
+            attributes: ["comment", "createdAt"],
+            include: [{
+              model: Users, 
+              attributes: {
+                exclude: ['updatedAt', 'password']
+              }
+            }]
+          }
+        ],
+      })
+        .then((songs) => {
+          format(songs)
+          songs.map((res) => {
+            Object.keys(res.dataValues).forEach(item => {
+              if (item == "song_likes") {
+                res.dataValues[item] = res.dataValues[item].length
+              }
+              if (item == "song_comments") {
+                format(res.dataValues[item])
+              }
+            })
+          })
+          res.json({songs})
+        })
+        .catch((e) => res.json({error: e.message}))
       
     } catch (e) {
       res.json(e.message);
