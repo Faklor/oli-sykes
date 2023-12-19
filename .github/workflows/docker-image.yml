@@ -14,9 +14,12 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+    with: 
+      registry: ghcr.io
+      username: ${{ github.actor }}
+      password: ${{ secrets.GIT_TOKEN }}
     - name: Build the Client image
-      run: docker build ./client --file ./client/Dockerfile --tag client:$(date +%s)
-    - name: Login regestry
-      run: docker login docker.pkg.github.com -u ${{ github.actor }} -p $pass
-    - name: Push image
-      run: docker push client:$(date +%s)
+      run: |
+        docker build ./client --file ./client/Dockerfile --tag client:$(date +%s)
+        docker run client:latest
+        docker push client:latest
