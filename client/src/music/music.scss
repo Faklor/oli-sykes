@@ -4,13 +4,13 @@
     width: 100%;
     height: 100%;
     z-index: 0;
-    background-color: #2F343E;
+    //background-color: #2F343E;
+    background-color: #1C1E30;
     overflow: hidden;
 
     display: grid;
-    grid-template-columns: 1fr 57%;
+    grid-template-columns: 1fr 57%; 
     gap:1em;
-    
 
     .songs{
         //overflow: hidden;
@@ -21,6 +21,17 @@
 
         //align-self: center;
         justify-self: end;
+    }
+    .video{
+        .like{
+
+            svg{
+                width: 5em;
+                height: 5em;
+                cursor: pointer;
+                
+            }
+        }
     }
     
 } 

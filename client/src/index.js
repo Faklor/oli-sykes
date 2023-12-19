@@ -11,8 +11,11 @@ import { persistStore } from 'redux-persist'
 //============components=====================
 import PrivateRoute from './privateRoute'
 import PrivateDash from './privateDash'
+//--------------Home-------------------------
 import Home from './home/home'
+//--------------Music------------------------
 import Music from './music/music'
+//-------------------------------------------
 import Blog from './blog/blog'
 //--------------User-------------------------
 import User from './user/user'
@@ -28,12 +31,22 @@ import hocDash from './user/hoc/hocDash'
 import {
   users,
   songAll,
-  albums
+  albums,
+  blogs
 } from './components/axiosRouterGet'
 import {
+  //song
   addSong,
   deleteSong,
-  editSong
+  editSong,
+  //album
+  addAlbum,
+  updateAlbum,
+  deleteAlbum,
+  //post
+  addPost,
+  updatePost,
+  deletePost
 } from './components/axiosRouterPost'
 //============components=====================
 import {
@@ -50,9 +63,11 @@ const SignUp = hoc(['Register','SignUp', 'Sign In', 'signIn','registration'])(Si
 const Users = hocDash({lable:'users',method:users, 
 titles:['id','login','email','created','lastEdit','delete']})(Dash)
 const Songs = hocDash({lable:'songs',method:songAll,
-titles:['id','title','url','album','created','delete'],addItem:addSong, deleteItemMethod:deleteSong, editItem:editSong})(Dash)
+titles:['id','title','video Id','album','created','delete'],addItem:addSong, deleteItemMethod:deleteSong, editItem:editSong})(Dash)
 const Albums = hocDash({lable:'albums',method:albums, 
-titles:['id','title','url','created','lastEdit','delete']})(Dash)
+titles:['id','title','imageUrl','created','lastEdit','delete'],addItem:addAlbum, deleteItemMethod:deleteAlbum,editItem:updateAlbum})(Dash)
+const Posts = hocDash({lable:'posts',method:blogs, 
+titles:['id','title','imageUrl','created','lastEdit','delete'],addItem:addPost, deleteItemMethod:deletePost,editItem:updatePost})(Dash)
 
 
 const router = createBrowserRouter([
@@ -61,11 +76,13 @@ const router = createBrowserRouter([
   { path:'/Music', element:<Music/>,
     children:[
       {
-        path:'albums/:albumsId'
+        path:':albumsName', element:<></>,
       }
     ]  
   },
-  { path: "/Blog", element: <Blog/> },
+  { path: "/Blog", element: <Blog/>,children:[
+    {path:":numberPosts"}
+  ]},
   //---------------------User-------------------------------
   { path: "/User", element:<User/>,
     children:[
@@ -78,10 +95,10 @@ const router = createBrowserRouter([
           { path:':item',  element:<Dash/> }
         ]},
         {path: 'music', element:<Songs/>},
-        {path: 'blogs', element:<Users/>},
+        {path: 'blogs', element:<Posts/>},
         {path: 'albums', element:<Albums/>},
         {path: ':userName', element:<Cabinet/>},
-      ]}
+      ]},
     ]
   },
   

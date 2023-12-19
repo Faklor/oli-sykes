@@ -82,6 +82,24 @@ class Song {
       res.json(e.message);
     }
   }
+
+  async getLike(req, res){
+    try{
+      const {userId, songId} = req.body
+
+      const user = await  Song_likes.findOne({where:{userId, songId}})
+      if(user){
+        res.json({like:true})
+      }
+      else{
+        res.json({like:false})
+      }
+
+    }
+    catch (e) {
+      res.json(e.message);
+    } 
+  }
 }
 
 export default new Song();

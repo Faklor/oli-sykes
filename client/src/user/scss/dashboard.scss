@@ -9,21 +9,24 @@
     overflow: hidden;
     overflow-y: auto;
     //transition: 0.1s;
+    //display: inline-block;
 
     .dashUsers{
         width: 100%;
         border-spacing: 0 1em;
         padding: 1em;
-
+        
         thead{
             font-size: 40px;
+            
+            th{
+                width: 10%;
+            }
             display: block;
-            th{width: 10%;}
+            width: 100%;
         }
         tbody{
             display: block;
-            overflow-y: scroll;
-            
             font-size: 18px;
             .add{
                 padding: 0.5em 1em;
@@ -51,7 +54,9 @@
                         
                     }
                 }
-                td{width: 20%;}
+                td{
+                    width: 10%;
+                }
             }
         }   
     }

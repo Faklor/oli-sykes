@@ -1,70 +1,102 @@
 import Header from "../components/header"
 import Slyder from './slyder'
 import Song from './song'
-import YouTube from 'react-youtube'
+import Video from './components/video'
+import Like from './components/like'
+
 
 import './music.scss'
 //-----------------axios------------------------
-import { songAll } from '../components/axiosRouterGet' 
-import { useEffect } from "react"
+import { 
+    songAll,
+    albums,
+    oneAlbum
+ } from '../components/axiosRouterGet' 
+import { useEffect, useState, memo } from "react"
+import { Outlet, useParams } from "react-router-dom"
 
 //import axios from 'axios'
 
 const Songs= props=>{
+    //==============state===========================
+    const [arraySongs, setArraySongs] = useState([])
+    const [arrayAlbums, setArrayAlbums] = useState([])
+    const [arrayComment, setArrayCommnet] = useState([])
+    //--------------video---------------------------
+    const [video, setVideo] = useState('http://www.youtube.com/embed/UNaYpBpRJOY?si=YqDdXzD_4ARsFoYk')
+    const [idSong, setIdSong] = useState('')
+    //==============navigate========================
+    
+    const {albumsName} = useParams()
+    
 
     useEffect(()=>{
         songAll()
-        .catch(e=>console.log(e))
-    }, [])
-    const albums = [
-        {
-            id:1,
-            name:'Seen',
-            img:'https://cdn52.zvuk.com/pic?type=release&id=3399082&ext=jpg&size=1920x1920',
-            time:'3.10'
-        },
-        {
-            id:2,
-            name:'Drown',
-            img:'https://avatars.yandex.net/get-music-content/49876/2daf1198.a.2945723-2/m1000x1000?webp=false',
-            time:'3.10'
-        },
-        {
-            id:3,
-            name:'Amo',
-            img:'https://avatars.yandex.net/get-music-content/175191/2c2f1ee3.a.6750328-1/m1000x1000?webp=false',
-            time:'3.10'
-        },
-        {
-            id:4,
-            name:'Dead',
-            img:'https://cdn61.zvuk.com/pic?type=release&id=12578304&ext=jpg&size=1920x1920',
-            time:'3.10'
-        },
-        {
-            id:5,
-            name:'Hospital',
-            img:'https://i.imgur.com/IiCmlpxh.jpg',
-            time:'3.10'
-        },
-        {
-            id:6,
-            name:'Al',
-            img:'https://altwall.net/img/bring/34_1024.jpg',
-            time:'3.10'
-        },
-        {
-            id:7,
-            name:'Motion',
-            img:'https://yt3.ggpht.com/a/AGF-l79qFB7YV_gfwzb8C3aYb4ze2lmeOBPLBgieBA=s900-c-k-c0xffffffff-no-rj-mo',
-            time:'3.10'
-        }
+        .then(res=>{
+            setArraySongs(res.data.songs)
+            setVideo('http://www.youtube.com/embed/'+res.data.songs[0].url)
+            setIdSong(res.data.songs[0].id)
+            
+            
+        })
+        .catch(e=>{
 
-    ]
-    
-    const songs = albums.map((i,key)=>{
+        })
+
+        albums()
+        .then(res=>{
+            
+            if(albumsName){
+                setArrayAlbums([])
+                
+                
+                //
+                res.data.albums.forEach(element => {
+                    if(albumsName ===  element.title){
+                        oneAlbum(element.id)
+                        .then(res=>{
+                            setArraySongs(res.data.songs)
+                            setVideo('http://www.youtube.com/embed/'+res.data.songs[0].url)
+                            setIdSong(res.data.songs[0].id)
+                            
+                        })
+                    }    
+                })
+                
+            }
+            else{
+                setArrayAlbums(res.data.albums)
+                
+            }
+        })
+        .catch(e=>{
+
+        })
         
-        return <Song {...i} key={key}/>
+        
+    }, [albumsName])
+    function play(url, id){
+        setVideo('http://www.youtube.com/embed/'+url)
+        setIdSong(id)
+        console.log(idSong)
+    }
+
+    function getAlbum(id){
+        oneAlbum(id)
+        .then(res=>{
+            
+            setArraySongs(res.data.songs)
+        })
+    }
+    
+    
+    //============================render===========================
+    const songs = arraySongs.map((i,index)=>{
+        
+        return <Song {...i} key={index} array={index} play={play}/>
+    })
+    const albumsRender  = arrayAlbums.map((i, index)=>{
+        return  <Slyder {...i} key={index} getAlbum={getAlbum}/>
     })
 
     
@@ -73,20 +105,21 @@ const Songs= props=>{
             <Header/>
             <main className="music">
                 <div className='slyder'>
-                    {albums.map((i, index)=>{
-                        return  <Slyder {...i} key={index}/>
-                    })}
+                    {albumsRender}
                     
                 </div>
                 <div className="songs">
                     {songs}
                 </div>
-                <YouTube videoId="SEp9Kh0M4f0?si=7Iun57Wa32HjYSZ7"/>
-                
-               
+                <div className="video">
+                    <Video url={video}/>
+                    {/* <Like idSong={idSong}/> */}
+                </div>
+                <Outlet/>
             </main>
+            
         </>
     )
 }
 
-export default Songs 
+export default memo(Songs) 

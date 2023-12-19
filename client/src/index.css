@@ -7,7 +7,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
 
   scrollbar-width: thin;          /* "auto" or "thin" */
-  scrollbar-color: #AAC281 ; 
+  scrollbar-color: #5771AD; 
 }
 
 code {
@@ -24,7 +24,7 @@ code {
   background-clip: content-box;   
 }
 *::-webkit-scrollbar-thumb {
-  background-color: #AAC281;   
+  background-color: #5771AD;   
   border-radius: 10px; 
   
   
