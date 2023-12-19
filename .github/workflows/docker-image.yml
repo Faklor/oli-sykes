@@ -14,5 +14,5 @@ jobs:
       - name: Build the Client image
         run: |
           docker login --username ${{ github.actor }} --password ${{ secrets.GIT_TOKEN }} ghcr.io
-          docker build ./client --file ./client/Dockerfile --tag ghcr.io/client:$(date +%Y%m%d%H)
-          docker push ghcr.io/client:$(date +%Y%m%d%H)
+          docker build ./client --file ./client/Dockerfile --tag ghcr.io/Faklor/oli-sykes/:$(date +%Y%m%d%H%m)
+          docker push ghcr.io/Faklor/oli-sykes/:$(date +%Y%m%d%H%m)
