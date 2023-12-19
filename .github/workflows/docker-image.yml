@@ -10,13 +10,13 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
-    with: 
-      registry: ghcr.io
-      username: ${{ github.actor }}
-      password: ${{ secrets.GIT_TOKEN }}
-    - name: Build the Client image
-      run: |
-        docker build ./client --file ./client/Dockerfile --tag client:$(date +%s)
-        docker run client:latest
-        docker push client:latest
+      - uses: actions/checkout@v3
+      with: 
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.GIT_TOKEN }}
+      - name: Build the Client image
+        run: |
+          docker build ./client --file ./client/Dockerfile --tag client:$(date +%s)
+          docker run client:latest
+          docker push client:latest
