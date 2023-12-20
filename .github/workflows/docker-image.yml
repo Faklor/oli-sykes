@@ -14,10 +14,10 @@ jobs:
       - name: Build the Client image
         run: |
           docker login --username faklor --password ${{ secrets.GIT_TOKEN }} ghcr.io
-          docker build ./client --file ./client/Dockerfile --tag ghcr.io/faklor/oli-sykes:latest
-          docker push ghcr.io/faklor/oli-sykes:latest
+          docker build ./client --file ./client/Dockerfile --tag ghcr.io/faklor/client:latest
+          docker push ghcr.io/faklor/client:latest
       - name: Build the Server image
         run: |
           docker login --username faklor --password ${{ secrets.GIT_TOKEN }} ghcr.io
-          docker build ./server --file ./server/Dockerfile --tag ghcr.io/faklor/oli-sykes:latest
-          docker push ghcr.io/faklor/oli-sykes:latest
+          docker build ./server --file ./server/Dockerfile --tag ghcr.io/faklor/server:latest
+          docker push ghcr.io/faklor/server:latest
