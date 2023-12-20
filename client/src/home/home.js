@@ -25,17 +25,17 @@ the horizon`}
         speed={100}/>
         <div>
           <h3>
-            It this syte - my Blog,<br/> scroll down and check  this
+            This site - my Blog,<br/> scroll down and check  this
           </h3>
           <ReactSVG src={stline}/>
         </div>
         
-        <Parallax pages={3}>
+        <Parallax pages={5}>
           {/* <ParallaxLayer offset={0} speed={2.5}> */}
             <ParallaxContent/>
-          {/* </ParallaxLayer> */}
+          {/* </ParallaxLayer> */} 
+          
         </Parallax>
-        
       </main>
     </>
   )
