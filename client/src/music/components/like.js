@@ -49,8 +49,10 @@ export default function Like({idSong,likes,comment,sendComment}){
     return(
         <>
         <div className="like">
+            <div>
             <ReactSVG src={like}  onClick={likeAdd} />
             <h1>{likes}</h1>
+            </div>
             <input defaultValue={text} onChange={(e)=>setText(e.target.value)} placeholder="Enter comment"/>
             <button onClick={()=>sendComment(idSong, text)}>send Comment</button>
             

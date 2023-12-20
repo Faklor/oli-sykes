@@ -12,7 +12,7 @@ const animateBarCheck = ()=>{
           return 100 * i
         },
         translateX: function(el, i) {
-          return anime.random(50, 150) * i
+          return anime.random(0, 10) * i
         },
         rotate: [function(el, i) { return anime.random(-360, 360)*i },0],
         duration: function() { return anime.random(100, 200) },

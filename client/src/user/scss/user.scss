@@ -9,6 +9,9 @@ $variable:500px;
     height: 100%;
     position: fixed;
     display: grid;
+    grid-template-columns: 1fr;
+    overflow: hidden;
+    overflow-x: scroll;
     
     color: #eee;
     font-family: "Electrolize";
@@ -31,4 +34,10 @@ $variable:500px;
         }
     }
     
+}
+
+@media screen and (max-width : 1440px){
+    .user{
+        grid-template-columns: 20% 1fr;
+    }
 }

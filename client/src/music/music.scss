@@ -10,6 +10,8 @@
 
     display: grid;
     grid-template-columns: 1fr 57%; 
+    grid-template-areas: "slyder slyder"
+    "songs video";
     gap:1em;
 
     .songs{
@@ -21,15 +23,18 @@
 
         //align-self: center;
         justify-self: end;
+        grid-area: songs;
     }
     .video{
-        frame{
-           
+        grid-area: video;
 
-        }
+        
         .like{
             display: flex;
             gap:1em;
+            div{
+                display: flex;
+            }
             h1{
                 color:#fff; 
             }
@@ -114,3 +119,40 @@
     }
     
 } 
+
+
+@media screen and (max-width : 1700px){
+    .music{
+        grid-template-columns: 1fr; 
+        grid-template-areas: "slyder"
+        "video"
+        "songs";
+        .songs{
+            align-self: start;
+            justify-self: center;
+            width: 640px;
+            height: 30em;
+        }
+        .video{
+            align-items: start;
+            justify-self: center;
+            .like{
+                display: block;
+            }
+            .userCommnet{
+                height: 1em;
+                h2{
+                    margin-top: 1px;
+                }
+            }
+            img{
+                width: 1em;
+                height: 1em;
+
+            }
+            h2{
+                font-size: 14px;
+            }
+        }
+    }
+}

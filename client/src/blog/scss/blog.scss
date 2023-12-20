@@ -15,7 +15,7 @@
         width: 30em;
         margin:4em 0 4em 0;
         background-color: #28293D;
-        border-radius: 50% 0 10px 10px;
+        border-radius: 40% 0 10px 10px;
         box-shadow: 0 0 4px 2px rgba(0, 0, 0, 0.25);
         color:#fff;
         
@@ -33,12 +33,16 @@
             color:#9e9e9e;
         }
         textarea{
-            margin:0 4em 1em 4em;
+            margin:0 4em 1em 4.5em  ;
             background-color: transparent;
             color:#9e9e9e;
             border:none;
             font-size: 24px;
             outline: none;
+            overflow: hidden;
+            
+            height: 13em;
+            
         }
 
     }
@@ -47,5 +51,21 @@
 @keyframes identifier {
     to{
         opacity: 1;
+    }
+}
+
+@media screen and (max-width : 500px){
+    .blog{
+        
+        .post{
+           width: 20em;
+           img{
+            width: 20em;
+           }
+           textarea{
+            margin-left: 1em;
+            width: 11em;
+           }
+        }
     }
 }

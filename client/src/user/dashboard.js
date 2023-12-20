@@ -8,10 +8,11 @@ const Dashboard = ()=>{
 
     return(
         <>
+            <DashNav/>
             <div className='dashboard'>
                 <Outlet/>
             </div>
-            <DashNav/>
+            
         </>
         
         

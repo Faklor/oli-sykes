@@ -8,8 +8,10 @@
     box-shadow: 0 0 4px 2px rgba(0, 0, 0, 0.25);
 
     //position
-    align-self: end;
+    align-self: center;
+    justify-self: center;
     margin:1em auto;
+    z-index: 1;
 
     .dashItem{
        
@@ -20,7 +22,7 @@
             
             pointer-events: none;
         }
-        div{
+        div{ 
             //display: block;
             margin:  0.2em auto;
             pointer-events: none;
@@ -37,5 +39,16 @@
 @keyframes identifier {
     to{
         opacity: 1;
+    }
+}
+
+@media screen and (max-width : 1440px){
+    .dashnav{
+       margin:1em 0.1em;
+       padding: 1em 0.5em;
+       justify-self: start; 
+       display: block;
+       position: fixed;
+
     }
 }

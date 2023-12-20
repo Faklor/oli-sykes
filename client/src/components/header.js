@@ -7,13 +7,14 @@ const Header = props=>{
     return(
         <header>
             <div className='logo'>
-                <ReactSVG src={logo}/>
-                <h1 className='textLogo'>Oli Sykes</h1>
+                <div>
+                    <ReactSVG src={logo}/>
+                    <h1 className='textLogo'>Oli Sykes</h1>
+                </div>
                 <Nav/>
             </div>
-            <div className='social'>
 
-            </div>
+
         </header>
     )
 }

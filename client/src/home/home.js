@@ -17,9 +17,11 @@ const Home = props => {
         <img  src={backHome} alt='backHome'/>
         <TextWriting text={`Hello!`} speed={100}/>
         <TextWriting text={`My name is
-Oliver Scott Sykes, 
+Oliver Scott 
+Sykes, 
 I formed 
-Bring me the horizon`} 
+Bring me 
+the horizon`} 
         speed={100}/>
         <div>
           <h3>

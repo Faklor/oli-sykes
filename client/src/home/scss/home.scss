@@ -44,7 +44,7 @@
         display: flex;
         h3{
             font-size: 40px;
-            color:#999999;
+            color:#999999; 
             margin: 2em 0 0 5em;
     
         }
@@ -81,5 +81,35 @@
     }
 }
 
+@media screen and (max-width : 1000px){
+    .home{
+        .writer{
+            &:nth-child(2){
+                font-size: 64px;
+                color:#fff;
+                margin: 3.5em 0 0 1em;
+            }
+            &:nth-child(3){
+                font-size: 40px;
+                color:#C2C2C2;
+                margin: 1em 0 0 1em;
+            }
+        }
+        div{
+            h3{
+                font-size: 40px;
+                color:#999999; 
+                margin: 2em 0 0 1em;
+                display: none;
+        
+            }
+            div{
+                svg{
+                    margin-left: 6em;
+                }
+            }
+        }
+    }
+}
 
 

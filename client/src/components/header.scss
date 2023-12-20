@@ -5,11 +5,14 @@ header{
     padding: 1em;
     //box-shadow: 0 0 0.1em 2px #343434;
     position: fixed;
-    width: 100%;
+    //width: 100%;
     z-index: 1;
     margin:3em;
 
     .logo{
+        div{
+            display: flex;
+        }
         display: flex;
         svg{
             width: 3.5em;
@@ -22,4 +25,14 @@ header{
             user-select: none;
         }
     }
+}
+@media screen and (max-width : 1700px){
+    
+    header{
+        
+       .logo{
+            display: block;
+       }
+    }
+    
 }

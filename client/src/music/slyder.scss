@@ -15,6 +15,7 @@
     
     grid-column: span 2;
     margin-top: 3em;
+    grid-area: slyder;
     
     .album{
         //width: 10em;
@@ -31,5 +32,29 @@
         }
     }
 
+    
+}
+
+@media screen and (max-width : 1700px){
+    
+    .slyder{
+        
+        //margin:10em auto 0 auto;
+        margin-top: 15em;
+        width: 30em;
+        
+    }
+    
+}
+
+@media screen and (max-width : 600px){
+    
+    .slyder{
+        
+       
+        
+
+        
+    }
     
 }

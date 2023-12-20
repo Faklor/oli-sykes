@@ -1,7 +1,7 @@
 .dashboard{
     width: 90em;
     height: 40em;
-    align-self: end;
+    align-self: center;
     margin: 0 auto;
     background-color: #28293D;
     border-radius: 10px;
@@ -10,8 +10,9 @@
     overflow-y: auto;
     //transition: 0.1s;
     //display: inline-block;
+    z-index: 0;
 
-    .dashUsers{
+    .dashUsers{ 
         width: 100%;
         border-spacing: 0 1em;
         padding: 1em;
@@ -19,14 +20,14 @@
         thead{
             font-size: 40px;
             
-            th{
-                width: 10%;
-            }
-            display: block;
+            // th{
+            //     width: 10%;
+            // }
+            //display: block;
             width: 100%;
         }
         tbody{
-            display: block;
+            //display: block;
             font-size: 18px;
             .add{
                 padding: 0.5em 1em;
@@ -54,12 +55,19 @@
                         
                     }
                 }
-                td{
-                    width: 10%;
-                }
+                // td{
+                //     width: 10%;
+                // }
             }
         }   
     }
     text-align: center;
 }
 
+
+@media screen and (max-width : 90em){
+    .dashboard{
+       // width: 30px;
+       margin-left: 3em;
+    }
+}
