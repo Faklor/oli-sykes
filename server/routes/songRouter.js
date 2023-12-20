@@ -12,5 +12,6 @@ router.post("/like", song.add_likes)
 router.post("/unlike", song.unlike)
 router.post("/getlike", song.getLike)
 router.get("/get", song.get)
+router.get("/sortedSongs", song.getAllSongs)
 
 export default router

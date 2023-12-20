@@ -138,6 +138,47 @@ class Song {
       .catch((e) => res.json({error: e.message}))
     
   }
+
+  async getAllSongs(req, res) {
+    try {
+
+      await Songs.findAll({
+        include: [
+          { model: Song_likes },
+          {
+            model: Song_comments,
+            attributes: ["comment", "createdAt"],
+            include: [{
+              model: Users, 
+              attributes: {
+                exclude: ['updatedAt', 'password']
+              }
+            }]
+          }
+        ],
+      })
+        .then((songs) => {
+          format(songs)
+          songs.map((res) => {
+            Object.keys(res.dataValues).forEach(item => {
+              if (item == "song_likes") {
+                res.dataValues[item] = res.dataValues[item].length
+              }
+              if (item == "song_comments") {
+                format(res.dataValues[item])
+              }
+            })
+          })
+          songs = songs.sort(
+            (p1, p2) => (p1.song_likes < p2.song_likes) ? 1 : (p1.song_likes > p2.song_likes) ? -1 : 0);
+          res.json({songs})
+        })
+        .catch((e) => res.json({error: e.message}))
+      
+    } catch (e) {
+      res.json(e.message);
+    }
+  }
 }
 
 export default new Song();
