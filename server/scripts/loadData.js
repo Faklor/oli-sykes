@@ -9,7 +9,6 @@ const loadData = (arrayObj) => {
             }
             data = JSON.parse(data);
             const model = await obj.model.findAll({ raw: true })
-            console.log(model)
             if (model.length == 0) {
                 data.forEach(async(res) => {
                     await obj.model.create(res)
