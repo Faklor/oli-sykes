@@ -157,8 +157,13 @@ const DashUsers = ({lable,method,titles,addItem,deleteItemMethod, albums,editIte
             <td>{i.email || i.url || i.img}</td>
             <td>{i.createdAt}</td>
             <td>{i.updatedAt}</td>
+            {lable ==="users"&&
+                <></>
+            }
+            {lable !=="users"&&
+                <td><button onClick={()=>deleteMethod(index,i.id)}>Delete</button></td>
+            }
             
-            <td><button onClick={()=>deleteMethod(index,i.id)}>Delete</button></td>
             
         </tr>
         })

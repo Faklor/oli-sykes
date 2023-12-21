@@ -61,7 +61,7 @@ const SignUp = hoc(['Register','SignUp', 'Sign In', 'signIn','registration'])(Si
 
 //----------------dash-----------------------
 const Users = hocDash({lable:'users',method:users, 
-titles:['id','login','email','created','lastEdit','delete']})(Dash)
+titles:['id','login','email','created','lastEdit']})(Dash)
 const Songs = hocDash({lable:'songs',method:songAll,
 titles:['id','title','video Id','album','created','delete'],addItem:addSong, deleteItemMethod:deleteSong, editItem:editSong})(Dash)
 const Albums = hocDash({lable:'albums',method:albums, 
