@@ -17,7 +17,7 @@ services:
     networks:
       - net
     environment: 
-      MYSQL_ROOT_PASSWORD: 123
+      MYSQL_ROOT_PASSWORD: 123 
       MYSQL_DATABASE: test
     ports:
       - 6033:3306
