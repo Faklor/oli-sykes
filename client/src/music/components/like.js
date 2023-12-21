@@ -13,7 +13,6 @@ export default function Like({idSong,likes,comment,sendComment,likeAdd,deleteLik
     const [text, setText] = useState('')
     //===================navigate========================
     
-    
 
     return(
         <>
@@ -33,7 +32,8 @@ export default function Like({idSong,likes,comment,sendComment,likeAdd,deleteLik
                     <img src={`data:${i.user.contentType};base64,${i.user.imageBase64}` || user} alt="commentUser"/>
                     <h2>{i.user.name}</h2>
                 </div>
-                <textarea disabled defaultValue={i.comment}></textarea>
+                <textarea disabled value={i.comment}></textarea>
+                {/* <h1>{i.comment}</h1> */}
             </div>
         })}
         </div>

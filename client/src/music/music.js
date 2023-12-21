@@ -103,11 +103,15 @@ const Songs= props=>{
         setVideo('http://www.youtube.com/embed/'+url)
         setIdSong(id)
 
+        setListLikes(like)
         songAll()
+        
         .then(res=>{
             const index  = res.data.songs.findIndex(song=>song.id===id)
             setArrayCommnet(res.data.songs[index].song_comments)
+            
         })
+       
         
         if(selectorUser !== null){
             getLikeVisible(selectorUser.id, id)
@@ -125,6 +129,7 @@ const Songs= props=>{
                 
             })  
         }
+
         
     }
 
