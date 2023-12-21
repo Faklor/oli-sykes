@@ -2,13 +2,15 @@ import { useEffect, useState } from "react"
 import Header from "../components/header"
 import './scss/blog.scss'
 import { blogs } from "../components/axiosRouterGet"
-import { Outlet, useParams } from "react-router-dom"
+import { Outlet, useNavigate, useParams } from "react-router-dom"
 import Post from "./components/post"
 
 const Blog= props=>{
     //=====================state===============
     const [array, setArray] =  useState([])
-    const {numberPosts} = useParams()
+    const {numberPosts} = useParams()   
+    //===================navigate==============
+    const navigate = useNavigate()
 
     useEffect(()=>{
         blogs()
@@ -20,12 +22,13 @@ const Blog= props=>{
                         
                         newArray.push(res.data.posts[i])
                     }
-                    console.log(newArray)
+                    
                     setArray(newArray)
                 }
                 else{
                     setArray(res.data.posts)
                 }
+                
             })
             .catch(e=>{
     
@@ -34,16 +37,23 @@ const Blog= props=>{
         
     },[numberPosts, array.length])
 
+    
+
     return(
         <>
         <Header/>
+        
         <main className="blog">
+        
             {/* <Filter/> */}
             {array.map((i,index)=>{
                 return <Post {...i} key={index}/>
             })}
             <Outlet/>
+            
+                
         </main>
+        
         </>
     )
 }
