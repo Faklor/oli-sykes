@@ -282,7 +282,4 @@ titles:['id','title','imageUrl','created','lastEdit','delete'],addItem:addPost, 
 4. нажмите снопку "cancel" что бы снова отобразить список без полей изменения
  
 </details>
-=======
 
-</details>
->>>>>>> cfc9be7f59c01c6e0ea802b2afe6692e2f566bb9
