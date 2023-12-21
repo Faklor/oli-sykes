@@ -92,22 +92,6 @@ const DashGraph = ()=>{
             />
           </PieChart>
         </ResponsiveContainer>
-        <ResponsiveContainer width="40%" height="100%">
-          <PieChart width={400} height={400}>
-            <Pie
-            activeIndex={activeLike}
-            activeShape={renderActiveShape}
-            data={likes}
-            cx="50%"
-            cy="50%"
-            innerRadius={60}
-            outerRadius={90}
-            fill="#456"
-            dataKey="value"
-            onMouseEnter={onPieEnter}
-            />
-          </PieChart>
-        </ResponsiveContainer>
         </div>
     )
 }
