@@ -22,10 +22,27 @@ header{
             color:#fff;
             font-size: 24px;
             pointer-events: none;
-            user-select: none;
+            user-select: none; 
+        }
+        #XMLID_12_{
+            stroke: #fff;
+            stroke-width: 20;
+            stroke-dasharray:0;
+            stroke-linecap:round;
+            animation: logo 10s 1s alternate infinite;
         }
     }
 }
+
+@keyframes logo {
+    100%{
+        //stroke-width:20;
+       stroke: #5771AD;
+       stroke-dasharray:300;
+
+    }
+}
+
 @media screen and (max-width : 1700px){
     
     header{

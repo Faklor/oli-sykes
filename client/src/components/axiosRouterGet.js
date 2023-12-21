@@ -12,13 +12,18 @@ const albums =async () => await axios.get('http://localhost:5000/api/album/get')
 const oneAlbum =async (id) => await axios.get('http://localhost:5000/api/album/get/'+id)
 //---------------------------Blogs-----------------------------
 const blogs =async () => await axios.get('http://localhost:5000/api/post/get')
+
+//sorted
+//---------------------------likes-----------------------------
+const songsLikes =async () => await axios.get('http://localhost:5000/api/song/sortedSongs')
 //==================export=====================================
-export {
+export { 
     users,
     //song---------
     songAll,
     albums,
     oneAlbum,
+    songsLikes,
     //post---------
     blogs
 } 

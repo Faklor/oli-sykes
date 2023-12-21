@@ -1,32 +1,114 @@
 import { PieChart, Pie, Sector, ResponsiveContainer } from 'recharts'
+import { songsLikes } from '../../components/axiosRouterGet'
+import { useEffect, useState } from 'react'
 
-const data = [
-    { name: 'Group A', value: 400 },
-    { name: 'Group B', value: 300 },
-    { name: 'Group C', value: 300 },
-    { name: 'Group D', value: 200 },
-]
+const renderActiveShape = (props) => {
+  const RADIAN = Math.PI / 180;
+  const { cx, cy, midAngle, innerRadius, outerRadius, startAngle, endAngle, fill, payload, percent } = props;
+  const sin = Math.sin(-RADIAN * midAngle);
+  const cos = Math.cos(-RADIAN * midAngle);
+  const sx = cx + (outerRadius + 10) * cos;
+  const sy = cy + (outerRadius + 10) * sin;
+  const mx = cx + (outerRadius + 30) * cos;
+  const my = cy + (outerRadius + 30) * sin;
+  const ex = mx + (cos >= 0 ? 1 : -1) * 22;
+  const ey = my;
+  const textAnchor = cos >= 0 ? 'start' : 'end';
+
+  return (
+    <g>
+      <text x={cx} y={cy} dy={8} textAnchor="middle" fill={fill}>
+        Song Rating
+      </text>
+      
+      <Sector
+        cx={cx}
+        cy={cy}
+        innerRadius={innerRadius}
+        outerRadius={outerRadius}
+        startAngle={startAngle}
+        endAngle={endAngle}
+        fill={fill}
+      />
+      <Sector
+        cx={cx}
+        cy={cy}
+        startAngle={startAngle}
+        endAngle={endAngle}
+        innerRadius={outerRadius + 6}
+        outerRadius={outerRadius + 10}
+        fill={fill}
+      />
+      <path d={`M${sx},${sy}L${mx},${my}L${ex},${ey}`} stroke={fill} fill="none" />
+      <circle cx={ex} cy={ey} r={2} fill={fill} stroke="none" />
+      <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} textAnchor={textAnchor} fill="#fff">{payload.name}</text>
+      <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} dy={18} textAnchor={textAnchor} fill="#999">
+        {`(Rate ${(percent * 100).toFixed(2)}%)`}
+      </text>
+    </g>
+  );
+}
 
 const DashGraph = ()=>{
+    const [likes, setLikes] = useState([])
+    const [activeLike, setActiveLike] = useState(0)
+
+    useEffect(()=>{
+      songsLikes()
+      .then(res=>{
+        let arr = []
+        res.data.songs.map(i=>{
+          return arr.push({name:i.title, value:i.song_likes})
+          
+        })
+        setLikes(arr)
+        // console.log(res.data.songs[0].song_likes)
+        // setLikes(res.data.songs)
+      })
+      .catch(e=>{
+
+      })
+    },[])
+   // console.log(likes)
+    const onPieEnter = (_, index) => {
+      setActiveLike(index)
+    }
+
     return(
-        <>
-        <ResponsiveContainer width="100%" height="100%">
-        <PieChart width={400} height={400}>
-          <Pie
-            activeIndex={''}
-            activeShape={''}
-            data={data}
+        <div className='graph'>
+        <ResponsiveContainer width="40%" height="100%">
+          <PieChart width={400} height={400}>
+            <Pie
+            activeIndex={activeLike}
+            activeShape={renderActiveShape}
+            data={likes}
             cx="50%"
             cy="50%"
             innerRadius={60}
-            outerRadius={80}
-            fill="#8884d8"
+            outerRadius={90}
+            fill="#FDA1A1"
             dataKey="value"
-            // onMouseEnter={this.onPieEnter}
-          />
-        </PieChart>
-      </ResponsiveContainer>
-        </>
+            onMouseEnter={onPieEnter}
+            />
+          </PieChart>
+        </ResponsiveContainer>
+        <ResponsiveContainer width="40%" height="100%">
+          <PieChart width={400} height={400}>
+            <Pie
+            activeIndex={activeLike}
+            activeShape={renderActiveShape}
+            data={likes}
+            cx="50%"
+            cy="50%"
+            innerRadius={60}
+            outerRadius={90}
+            fill="#456"
+            dataKey="value"
+            onMouseEnter={onPieEnter}
+            />
+          </PieChart>
+        </ResponsiveContainer>
+        </div>
     )
 }
 
