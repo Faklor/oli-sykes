@@ -21,6 +21,8 @@ const deleteSong =async (id) => await axios.post('http://localhost:5000/api/song
 const editSong =async (id, title, url, albumId) => await axios.post('http://localhost:5000/api/song/update',{id:id,title:title,url:url,albumId:albumId})
 //--------------------------addLike----------------------------
 const addLike =async (userId,songId)=> await axios.post('http://localhost:5000/api/song/like',{userId:userId, songId:songId})
+//--------------------------deleteLike----------------------------
+const deleteLike =async (userId,songId)=> await axios.post('http://localhost:5000/api/song/unlike',{userId:userId, songId:songId})
 //---------------------------like------------------------------
 const getLikeVisible =async (userId,songId) => await axios.post('http://localhost:5000/api/song/getlike',{userId:userId,songId:songId})
 //---------------------------commnet---------------------------
@@ -52,6 +54,7 @@ export {
     deleteSong,
     editSong,
     addLike,
+    deleteLike,
     getLikeVisible,
     //album
     addAlbum,

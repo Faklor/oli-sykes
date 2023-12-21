@@ -1,0 +1,37 @@
+[
+	{
+		"id" : "0a1c0540-0f41-49c2-8d17-2dffb1073ece",
+		"title" : "Solo",
+		"img" : "https://avatars.mds.yandex.net/i?id=88530fa7d1cf146cef598084976f421d198eedd8-8497815-images-thumbs&n=13",
+		"createdAt" : "2023-12-20 22:51:04",
+		"updatedAt" : "2023-12-20 22:51:04"
+	},
+	{
+		"id" : "22aa2f39-c6b0-4d49-afe7-b558040d054e",
+		"title" : "Dear Diary",
+		"img" : "https://avatars.mds.yandex.net/i?id=3c953a246db34c63355f5a17d5fe99734ce29db4-4285597-images-thumbs&n=13",
+		"createdAt" : "2023-12-20 22:15:25",
+		"updatedAt" : "2023-12-20 22:15:25"
+	},
+	{
+		"id" : "2c3e8e1c-bedb-4b8e-94f6-d881e282431b",
+		"title" : "Amo",
+		"img" : "https://avatars.mds.yandex.net/i?id=85212aff2e234f13e3fb92363f1cd96e811f52f5-5242655-images-thumbs&n=13",
+		"createdAt" : "2023-12-20 22:14:43",
+		"updatedAt" : "2023-12-20 22:14:43"
+	},
+	{
+		"id" : "774ee6b5-549f-4900-b696-eed88278a75b",
+		"title" : "That's The Spirit",
+		"img" : "https://avatars.mds.yandex.net/i?id=e9b07c956c69a1666cda0300c3eb1c5d-5204396-images-thumbs&n=13",
+		"createdAt" : "2023-12-20 22:15:59",
+		"updatedAt" : "2023-12-20 22:15:59"
+	},
+	{
+		"id" : "e5d26fbe-ecc4-4f49-be71-4ce5ffbef129",
+		"title" : "Sempiternal",
+		"img" : "https://avatars.mds.yandex.net/i?id=a664da0ae1d62a568879d9e5e9ea3d19dfa685eb-3602423-images-thumbs&n=13",
+		"createdAt" : "2023-12-20 22:14:27",
+		"updatedAt" : "2023-12-20 22:17:34"
+	}
+]

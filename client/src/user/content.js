@@ -7,7 +7,6 @@ import {
 } from '../store/editAccount'
 import {
     editImg,
-    signIn
 } from '../components/axiosRouterPost'
 import {
     selectUser,  
@@ -37,7 +36,7 @@ export default function Content(props){
         .then(res=>{
            
             if(res.data.error){
-                setError('Image size is too big < 100kB')
+                setError('Image size is too big < 50kB and Only Jpg')
             }
             else{
                 setError('')

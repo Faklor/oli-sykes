@@ -107,6 +107,12 @@ const setLike = ()=>{
         fill:'#EE88A3',
     })
 }
+const deleteLike = ()=>{
+    anime({
+        targets:'.likePath',
+        fill:'#5771AD',
+    })
+}
 export {
     animateBarCheck,
     animateBarUnCheck,
@@ -117,5 +123,6 @@ export {
     deleteItem,
     //-------------------
     setLike,
+    deleteLike,
 }
 //===================================================

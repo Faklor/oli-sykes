@@ -9,7 +9,7 @@ import { selectUser } from "../store/nowUser"
 
 import './music.scss'
 //-----------------axios------------------------
-import {addComment} from '../components/axiosRouterPost' 
+import {addComment, getLikeVisible, addLike, deleteLike} from '../components/axiosRouterPost' 
 import { 
     songAll,
     albums,
@@ -25,7 +25,8 @@ const Songs= props=>{
     const [arraySongs, setArraySongs] = useState([])
     const [arrayAlbums, setArrayAlbums] = useState([])
     const [arrayComment, setArrayCommnet] = useState([])
-    const [like, setLike] = useState('')
+    const [like, setLiked] = useState('')
+    const [listLikes, setListLikes] = useState('')
     //--------------video---------------------------
     const [video, setVideo] = useState('http://www.youtube.com/embed/UNaYpBpRJOY?si=YqDdXzD_4ARsFoYk')
     const [idSong, setIdSong] = useState('')
@@ -43,9 +44,23 @@ const Songs= props=>{
             setVideo('http://www.youtube.com/embed/'+res.data.songs[0].url)
             setIdSong(res.data.songs[0].id)
 
-            setLike(res.data.songs[0].song_likes)
+            setListLikes(res.data.songs[0].song_likes)
             setArrayCommnet(res.data.songs[0].song_comments)
 
+            if(selectorUser!== null){
+                getLikeVisible(selectorUser.id, res.data.songs[0].id)
+                .then(res=>{
+                    //console.log(res.data.like)
+                    if(res.data.like === true){
+                        setLiked(true)
+                       
+                    }
+                    else{
+                        setLiked(false)
+                    }
+                })
+            }
+            
             
         })
         .catch(e=>{
@@ -83,13 +98,33 @@ const Songs= props=>{
         })
         
         
-    }, [albumsName])
+    }, [albumsName, selectorUser])
     function play(url, id, comment, like){
         setVideo('http://www.youtube.com/embed/'+url)
         setIdSong(id)
 
-        setArrayCommnet(comment)
-        setLike(like)
+        songAll()
+        .then(res=>{
+            const index  = res.data.songs.findIndex(song=>song.id===id)
+            setArrayCommnet(res.data.songs[index].song_comments)
+        })
+        
+        if(selectorUser !== null){
+            getLikeVisible(selectorUser.id, id)
+            .then(res=>{
+                //console.log(res.data.like)
+                if(res.data.like === true){
+                    setLiked(true)
+                   
+                }
+                else{
+                    setLiked(false)
+                }
+                
+                
+                
+            })  
+        }
         
     }
 
@@ -119,6 +154,33 @@ const Songs= props=>{
         }
         
     }
+    function likeAdd(idSong){
+        if(selectorUser !== null){
+            addLike(selectorUser.id, idSong)
+            .then(res=>{
+                setLiked(true)
+                songAll()
+                .then(res=>{
+                    const index  = res.data.songs.findIndex(song=>song.id===idSong)
+                    setListLikes(res.data.songs[index].song_likes)
+                })
+            }) 
+        }
+        else{
+            return navigate('../User/signIn')
+        }
+    }
+    function deleteLiked(idSong){
+        deleteLike(selectorUser.id, idSong)
+        .then(res=>{
+            setLiked(false)
+            songAll()
+                .then(res=>{
+                    const index  = res.data.songs.findIndex(song=>song.id===idSong)
+                    setListLikes(res.data.songs[index].song_likes)
+                })
+        })
+    }
     
     
     
@@ -145,7 +207,14 @@ const Songs= props=>{
                 </div>
                 <div className="video">
                     <Video url={video}/>
-                    <Like idSong={idSong} likes={like} comment={arrayComment}  sendComment={sendComment}/>
+                    <Like idSong={idSong} 
+                    likes={like} 
+                    comment={arrayComment}  
+                    sendComment={sendComment} 
+                    likeAdd={likeAdd} 
+                    deleteLiked={deleteLiked}
+                    listLikes={listLikes}
+                    />
                 </div>
                 <Outlet/>
             </main>
