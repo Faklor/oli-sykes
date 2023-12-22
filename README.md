@@ -3,7 +3,7 @@ _______________________________________________________
 > **УСТАНОВКА**  
 _______________________________________________________
 1. Скачайте с репозитория файл docker-compose.yaml
-  или создайте в любом удобном вам месте файл с расширением .yaml
+  или создайте в любом удобном вам месте файл docker-compose.yaml
   и поместите в него следующий код:  
 _______________________________________________________
 ```javascript
@@ -17,7 +17,7 @@ services:
     networks:
       - net
     environment: 
-      MYSQL_ROOT_PASSWORD: 123 
+      MYSQL_ROOT_PASSWORD: 123
       MYSQL_DATABASE: test
     ports:
       - 6033:3306
@@ -29,8 +29,8 @@ services:
       test: ["CMD", "mysqladmin" ,"ping", "-h", db, "-uroot", "-p123"]
       interval: 5s
       timeout: 5s
-      start_period: 20s
-      retries: 5
+      start_period: 5s
+      retries: 50
 
   server:
     image: ghcr.io/faklor/server:latest
@@ -50,11 +50,11 @@ services:
     ports:
       - 5000:5000
     healthcheck:
-      test: curl --fail http://server:5000/api/album/get || exit 1
+      test: curl --fail http://server:5000/api/album/get
       interval: 5s
-      retries: 5
-      start_period: 5s
       timeout: 5s
+      start_period: 5s
+      retries: 10
 
   client:
     image: ghcr.io/faklor/client:latest
