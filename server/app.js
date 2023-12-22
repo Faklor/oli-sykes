@@ -34,18 +34,18 @@ const listen = async () => {
       fs.mkdirSync(folderName);
     }
 
-    await sequelize.authenticate();
-    await sequelize.sync();
-    // await sequelize.sync({force: true});
+    // await sequelize.authenticate();
+    // await sequelize.sync();
+    await sequelize.sync({force: true});
     app.listen(PORT || 5000, () => {
       console.log(`http://localhost:${PORT}`);
     });
 
     loadData([
       // {file: "./scripts/posts.json", model: Posts}, 
-      {file: "./scripts/albums.json", model: Albums},
-      {file: "./scripts/songs.json", model: Songs},
       {file: "./scripts/users.json", model: Users},
+      {file: "./scripts/albums.json", model: Albums},
+      {file: "./scripts/songs.json", model: Songs}, 
       {file: "./scripts/song_comments.json", model: Song_comments},
       {file: "./scripts/song_likes.json", model: Song_likes},
     ]);
