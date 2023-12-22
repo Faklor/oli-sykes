@@ -42,10 +42,10 @@ const listen = async () => {
     });
 
     loadData([
-      // {file: "./scripts/posts.json", model: Posts}, 
       {file: "./scripts/users.json", model: Users},
       {file: "./scripts/albums.json", model: Albums},
       {file: "./scripts/songs.json", model: Songs}, 
+      {file: "./scripts/posts.json", model: Posts}, 
       {file: "./scripts/song_comments.json", model: Song_comments},
       {file: "./scripts/song_likes.json", model: Song_likes},
     ]);
